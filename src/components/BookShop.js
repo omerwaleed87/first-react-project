@@ -136,9 +136,12 @@ class BookShop extends Component{
     checkFormValidationData = (book) => {
         let isChangedFlag = false;
 
-        isChangedFlag = this.checkFormValidationFields(book.title);
-        isChangedFlag = this.checkFormValidationFields(book.author);
-        isChangedFlag = this.checkFormValidationFields(book.description);
+        for(let bookData in book){
+            isChangedFlag = isChangedFlag || this.checkFormValidationFields(book[bookData]);
+        }
+        // isChangedFlag += this.checkFormValidationFields(book.title);
+        // isChangedFlag = this.checkFormValidationFields(book.author);
+        // isChangedFlag = this.checkFormValidationFields(book.description);
         
         if(isChangedFlag){
             this.setState({addBook : book});
@@ -148,8 +151,9 @@ class BookShop extends Component{
     }
 
     addBookHandler = () => {
-        const omer = [...this.state.addBook];
-        const formValidations = this.checkFormValidationData(this.state.addBook);
+        const addBookData = {...this.state.addBook};
+        const formValidations = this.checkFormValidationData(addBookData);
+
         if(formValidations){
             const newAPIService = new PortalCall();
             const parameters = {
