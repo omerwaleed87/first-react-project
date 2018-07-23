@@ -25,11 +25,11 @@ class Book extends Component{
         return ( 
             <WrappDivisions mainClass="book-Repo">
                 <h1>Add a new book</h1>
-                <input type="text" id="title" placeholder="Title" 
+                <input type="text" id="title" style={!this.props.addBook.title.isValid ? {background : "red"} : {background : "white"}} value={bookProps.addBook.title.value} placeholder="Title" 
                     onChange={bookProps.changeTitle}/>
-                <input type="text" id="auther" placeholder="Auther" 
+                <input type="text" id="auther" style={!this.props.addBook.author.isValid ? {background : "red"} : {background : "white"}} value={bookProps.addBook.author.value} placeholder="Auther" 
                     onChange={bookProps.changeAuthor}/>
-                <input type="text" id="desc" placeholder="Description" 
+                <input type="text" id="desc" style={!this.props.addBook.description.isValid ? {background : "red"} : {background : "white"}} value={bookProps.addBook.description.value} placeholder="Description" 
                     onChange={bookProps.changeDescription}/>
                 <button onClick={bookProps.addBookHandler}>Add Book</button>
             </WrappDivisions>

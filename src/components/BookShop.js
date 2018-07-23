@@ -31,12 +31,43 @@ class BookShop extends Component{
     state = {
         newBook : [],
         otherBooks : [],
+        addBook : {
+            title : {
+                value : "",
+                isValid : true,
+                validation : {
+                    required : true,
+                    minLength : 5,
+                    maxLength : 10,
+                },
+            },
+            description : {
+                value : "",
+                isValid : true,
+                validation : {
+                    required : true,
+                    minLength : 15,
+                    maxLength : 20,
+                },
+            },
+            author : {
+                value : "",
+                isValid : true,
+                validation : {
+                    required : true,
+                    minLength : 5,
+                    maxLength : 10,
+                },
+            }, 
+        },
     };
 
     setMembersToNull = () => {
-        this.title = "";
-        this.author = "";
-        this.description = "";
+        const addBookData = {...this.state.addBook};
+        addBookData.title.value = "";
+        addBookData.author.value = "";
+        addBookData.description.value = "";
+        this.setState({addBook : addBookData});
     }
 
     componentDidMount(){
@@ -88,31 +119,63 @@ class BookShop extends Component{
         console.log("Component will update of book shop end");
     }
 
+    checkFormValidationFields = (data) => {
+        let isChangedFlag = false;
+
+        const addBookData = data;
+        if(addBookData.value === "" || addBookData.value.length < addBookData.validation.minLength || addBookData.value.length > addBookData.validation.maxLength){
+            addBookData.isValid = false;
+            isChangedFlag = true;
+        }
+        else
+            addBookData.isValid = true;
+
+        return isChangedFlag;
+    }
+
+    checkFormValidationData = (book) => {
+        let isChangedFlag = false;
+
+        isChangedFlag = this.checkFormValidationFields(book.title);
+        isChangedFlag = this.checkFormValidationFields(book.author);
+        isChangedFlag = this.checkFormValidationFields(book.description);
+        
+        if(isChangedFlag){
+            this.setState({addBook : book});
+            return false;
+        }
+        return true;
+    }
+
     addBookHandler = () => {
-        const newAPIService = new PortalCall();
-        const parameters = {
-            title : this.title,
-            author : this.author,
-            description : this.description
+        const omer = [...this.state.addBook];
+        const formValidations = this.checkFormValidationData(this.state.addBook);
+        if(formValidations){
+            const newAPIService = new PortalCall();
+            const parameters = {
+                title : this.state.addBook.title.value,
+                author : this.state.addBook.author.value,
+                description : this.state.addBook.description.value
+            }
+            const addNewBookParams = {
+                params : {...parameters}
+            }
+            const addNewBookService = {...addNewBookParams , ...newAPIService};
+            axiosInstance.post("/addBooks.json", addNewBookService)
+                .then(response => {
+                    // console.log("Add Book Handler inside");
+                    this.setMembersToNull();
+                    const bookState = this.state.newBook;
+                    let concateBooks = [
+                        ...bookState,
+                        parameters
+                    ];
+                    this.limit = this.limit + 1;
+                    this.setState({newBook : concateBooks});
+                }).catch(error => {
+                    console.log(error, "i have got an error");
+                });
         }
-        const addNewBookParams = {
-            params : {...parameters}
-        }
-        const addNewBookService = {...addNewBookParams , ...newAPIService};
-        axiosInstance.post("/addBooks.json", addNewBookService)
-            .then(response => {
-                // console.log("Add Book Handler inside");
-                this.setMembersToNull();
-                const bookState = this.state.newBook;
-                let concateBooks = [
-                    ...bookState,
-                    parameters
-                ];
-                this.limit = this.limit + 1;
-                this.setState({newBook : concateBooks});
-            }).catch(error => {
-                console.log(error, "i have got an error");
-            });
     }
 
     updateTitleField = (key, event) => {
@@ -138,19 +201,29 @@ class BookShop extends Component{
     }
 
     onInputTitle = (event) => {
-        this.title = event.target.value;
+        const addBookData = {...this.state.addBook};
+        addBookData.title.value = event.target.value;
+        const titleCheckFlag = this.checkFormValidationFields(addBookData.title);
+        this.setState({addBook : addBookData});
     }
 
     onInputAuthor = (event) => {
-        this.author = event.target.value;
+        const addBookData = {...this.state.addBook};
+        addBookData.author.value = event.target.value;
+        const titleCheckFlag = this.checkFormValidationFields(addBookData.author);
+        this.setState({addBook : addBookData});
     }
 
     onInputDescription = (event) => {
-        this.description = event.target.value;
+        const addBookData = {...this.state.addBook};
+        addBookData.description.value = event.target.value;
+        const titleCheckFlag = this.checkFormValidationFields(addBookData.description);
+        this.setState({addBook : addBookData});
     }
 
     makeNewBookContent = () => {
         return <AddBook 
+                addBook={this.state.addBook}
                 changeTitle={this.onInputTitle.bind(this)}
                 changeAuthor={this.onInputAuthor.bind(this)}
                 changeDescription={this.onInputDescription.bind(this)}
