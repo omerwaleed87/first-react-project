@@ -35,7 +35,7 @@ class Persons extends Component {
     }
 
     getSnapshotBeforeUpdate(a){
-        console.log("Persons.js getSnapshotBeforeUpdate()", a);
+        console.log("Persons.js getSnapshotBeforeUpdate()");
         return true;
     }
 

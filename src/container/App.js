@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 
 import '../container/App.css';
 
@@ -22,36 +23,6 @@ class App extends PureComponent {
   }
 
   state = {                                       //CLASS STATE
-    Human : [ 
-      {
-        id : 0 , name : "Omer", age  : 25, color : "white"
-      },
-      {
-        id : 1 , name : "Sheggy", age  : 26, color : "white"
-      },
-      {
-        id : 2 , name : "Chummi das", age : 29, color : "white"
-      },
-      {
-        id : 3 , name : "Butt", age : 25, color : "white"
-      },
-      {
-        id : 4 , name : "Saqib naag", age : 29, color : "white"
-      },
-      {
-        id : 5 , name : "kukri", age : 27, color : "white"
-      },
-      {
-        id : 6 , name : "Ahmad Imran hashmi", age : 59, color : "white"
-      },
-      {
-        id : 7 , name : "Irtiza Dangar" , age : 30, color : "white"
-      },
-      {
-        id : 8 , name : "Qaiser baba", age : 37, color : "white"
-      }
-    ],
-    currenState : 0,
     authenticated : true,
   }
 
@@ -90,10 +61,10 @@ class App extends PureComponent {
 
   renderNextButton = () => {                      // Helper Function
     let makeButton = "";
-    if(typeof this.state.Human[(this.state.currenState*this.stateChunks)+this.stateChunks] !== "undefined"){
+    if(typeof this.props.Human[(this.props.currenState*this.stateChunks)+this.stateChunks] !== "undefined"){
       makeButton = (
         <div>
-          <button onClick={this.showPaginateHumanData.bind(this, 1)}>Next</button>
+          <button onClick={this.props.showNextPaginateHumanData}>Next</button>
         </div>
       )
     }
@@ -102,10 +73,10 @@ class App extends PureComponent {
 
   renderPrevButton = () => {                      // Helper Function
     let makeButton = "";
-    if(typeof this.state.Human[(this.state.currenState*this.stateChunks)-1] !== "undefined"){
+    if(typeof this.props.Human[(this.props.currenState*this.stateChunks)-1] !== "undefined"){
       makeButton = (
         <div>
-          <button onClick={this.showPaginateHumanData.bind(this, -1)}>Prev</button>
+          <button onClick={this.props.showPrevPaginateHumanData}>Prev</button>
         </div>
       )
     }
@@ -118,11 +89,11 @@ class App extends PureComponent {
       <Aux>
         <AuthContext.Provider value={this.state.authenticated}>
           <Human 
-            humanList = {this.state.Human}
+            humanList = {this.props.Human}
             stateChunks = {this.stateChunks}
-            currentState = {this.state.currenState}
-            humanAgeClick = {this.humanEventHandler}
-            humanNameChange = {this.humanNameHandler}/>
+            currentState = {this.props.currenState}
+            humanAgeClick = {this.props.onClickAge}
+            humanNameChange = {this.props.onChangeInputName}/>
         </AuthContext.Provider>
       </Aux>
     )
@@ -137,11 +108,11 @@ class App extends PureComponent {
 
     return (
       <div className="App">
-          {/*<Aux>
+          <Aux>
             {prevButton}
             {currentContent}
             {nextButton}
-          </Aux>*/}
+          </Aux>
           {/*<Aux>
             <Book/>
           </Aux>*/}
@@ -155,4 +126,20 @@ class App extends PureComponent {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        Human : state.Human,
+        currenState : state.currenState,
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onChangeInputName : (key, event) => dispatch({type: 'NAME_CHANGE', value : event.target.value, key : key}),
+        onClickAge        : (key) => dispatch({type: 'AGE_CLICK', value : 'red', key : key}),
+        showNextPaginateHumanData : () => dispatch({type: 'NEXT_PAGINATE', value: 1}),
+        showPrevPaginateHumanData : () => dispatch({type: 'PREV_PAGINATE', value: -1}),
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
