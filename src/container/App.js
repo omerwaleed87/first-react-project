@@ -11,6 +11,9 @@ import Aux from '../HOC/Auxi';
 
 import { BrowserRouter } from "react-router-dom";
 
+// redux + async call + middleware
+import * as actionCreators from '../store/actions/actions';
+
 export const AuthContext = React.createContext(false);
 
 class App extends PureComponent {
@@ -101,18 +104,18 @@ class App extends PureComponent {
   }
 
   render() {                                      // Render Function
-
+    console.log(this.props);
     let prevButton = this.renderPrevButton();
     let nextButton = this.renderNextButton();
     let currentContent = this.renderCurrentContent();
 
     return (
       <div className="App">
-          <Aux>
+          {/*<Aux>
             {prevButton}
             {currentContent}
             {nextButton}
-          </Aux>
+          </Aux>*/}
           {/*<Aux>
             <Book/>
           </Aux>*/}
@@ -135,10 +138,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onChangeInputName : (key, event) => dispatch({type: 'NAME_CHANGE', value : event.target.value, key : key}),
-        onClickAge        : (key) => dispatch({type: 'AGE_CLICK', value : 'red', key : key}),
-        showNextPaginateHumanData : () => dispatch({type: 'NEXT_PAGINATE', value: 1}),
-        showPrevPaginateHumanData : () => dispatch({type: 'PREV_PAGINATE', value: -1}),
+        onChangeInputName : (key, event) => dispatch(actionCreators.humanNameChange(key, event)),
+        onClickAge        : (key) => dispatch(actionCreators.humanAgeClick(key, "red")),
+        showNextPaginateHumanData : () => dispatch(actionCreators.HumanNextPaginate(1)),
+        showPrevPaginateHumanData : () => dispatch(actionCreators.HumanPrevPaginate(-1)),
     };
 }
 

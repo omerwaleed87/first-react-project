@@ -15,6 +15,9 @@ import AsyncComponent from "../HOC/AsyncComponent/AsyncComponent";
 import Links from '../RoutingLinks/Links';
 
 import { Route, Switch, Redirect } from "react-router-dom";
+import { connect } from 'react-redux';
+
+import * as bookShopActionCreator from './BookShopActionCreator/getBooksAction';
 
 const asyncExtraBookComponent = AsyncComponent(() => {
     return import('./Books');
@@ -72,21 +75,22 @@ class BookShop extends Component{
 
     componentDidMount(){
         console.log("Component did mount of book shop");
-        axios.get("https://jsonplaceholder.typicode.com/posts")
-            .then(response => {
-                const allData = response.data.slice(0, this.limit);
-                console.log("INSIDE Component did mount of book shop");
-                this.allBooksData = allData.map((a,b) => {
-                    return {
-                        title : a.title,
-                        description : a.body,
-                        id : a.id
-                    };
-                });
-                this.setState({otherBooks : this.allBooksData});
-            }).catch(error => {
-                console.log(error, "i have got an error");
-            });
+        // axios.get("https://jsonplaceholder.typicode.com/posts")
+        //     .then(response => {
+        //         const allData = response.data.slice(0, this.limit);
+        //         console.log("INSIDE Component did mount of book shop");
+        //         this.allBooksData = allData.map((a,b) => {
+        //             return {
+        //                 title : a.title,
+        //                 description : a.body,
+        //                 id : a.id
+        //             };
+        //         });
+        //         this.setState({otherBooks : this.allBooksData});
+        //     }).catch(error => {
+        //         console.log(error, "i have got an error");
+        //     });
+        this.props.fetchBookDataOnComponentMount(this.limit);
         console.log("Component did mount of book shop end");
     }
 
@@ -99,22 +103,23 @@ class BookShop extends Component{
 
     componentWillUpdate(){
         console.log("Component will update of book shop");
-        if(this.allBooksData.length !== this.limit){
-            axios.get("https://jsonplaceholder.typicode.com/posts")
-                .then(response => {
-                    const allData = response.data.slice(0, this.limit);
-                    console.log("INSIDE Component Will update of book shop");
-                    this.allBooksData = allData.map((a,b) => {
-                        return {
-                            title : a.title,
-                            description : a.body,
-                            id : a.id
-                        };
-                    });
-                    this.setState({otherBooks : this.allBooksData});
-                }).catch(error => {
-                    console.log(error, "i have got an error");
-                });
+        if(this.props.otherBooks.length !== this.limit){
+            this.props.fetchBookDataOnComponentMount(this.limit);
+        //     axios.get("https://jsonplaceholder.typicode.com/posts")
+        //         .then(response => {
+        //             const allData = response.data.slice(0, this.limit);
+        //             console.log("INSIDE Component Will update of book shop");
+        //             this.allBooksData = allData.map((a,b) => {
+        //                 return {
+        //                     title : a.title,
+        //                     description : a.body,
+        //                     id : a.id
+        //                 };
+        //             });
+        //             this.setState({otherBooks : this.allBooksData});
+        //         }).catch(error => {
+        //             console.log(error, "i have got an error");
+        //         });
         }
         console.log("Component will update of book shop end");
     }
@@ -236,15 +241,13 @@ class BookShop extends Component{
     }
 
     fetchNewBookContent = () => {
-        const booksState = this.state.otherBooks;
+        const booksState = this.props.otherBooks;
         if(booksState.length > 0){
             return booksState.map((bvalue, bkey) => {
                 return <ReadBook title={bvalue.title}
                             description={bvalue.description}
                             id={bvalue.id}
-                            key={bkey}
-                            allDataLength={this.allBooksData.length}
-                            indexLength={this.limit}>
+                            key={bkey}>
                     </ReadBook>
             });
         }
@@ -253,6 +256,7 @@ class BookShop extends Component{
 
     updateBookContent = () => {
         const booksState = this.state.otherBooks;
+        console.log("fetch books : ", booksState);
         if(booksState.length > 0){
             return booksState.map((bvalue, akey) => {
                 return <UpdateBook title={bvalue.title}
@@ -271,9 +275,9 @@ class BookShop extends Component{
 
     render(){
         console.log("render of book shop");
-        let newBookContent = this.makeNewBookContent();
+        // let newBookContent = this.makeNewBookContent();
         let fetchBookContents = this.fetchNewBookContent();
-        let updateBookContents = this.updateBookContent();
+        // let updateBookContents = this.updateBookContent();
         return (
             <div>
                 <section className="header">
@@ -297,7 +301,7 @@ class BookShop extends Component{
                             </div>
                         }>
                     </Route>
-                    <Route path="/add-posts" exact render={() => 
+                    {/*<Route path="/add-posts" exact render={() => 
                             <div>
                                 <h1>Add Books</h1>
                                 <div>
@@ -305,8 +309,8 @@ class BookShop extends Component{
                                 </div>
                             </div>
                         }>
-                    </Route>
-                    <Route path="/update-posts" exact render={() => 
+                    </Route>*/}
+                    {/*<Route path="/update-posts" exact render={() => 
                             <div>
                                 <h1>Update Books</h1>
                                 <div>
@@ -314,10 +318,10 @@ class BookShop extends Component{
                                 </div>
                             </div>
                         }>
+                    </Route>*/}
+                    {/*<Route path="/extra-view-posts" component={asyncExtraBookComponent}>
                     </Route>
-                    <Route path="/extra-view-posts" component={asyncExtraBookComponent}>
-                    </Route>
-                    <Route path="/view-posts/:id" exact component={BookDetail}></Route>
+                    <Route path="/view-posts/:id" exact component={BookDetail}></Route>*/}
                     <Route render={() => <h1>Command not found !!!!!</h1>} ></Route>
                     {/*<Redirect from="/" to="/extra-view-posts" />*/}
                 </Switch>
@@ -326,4 +330,23 @@ class BookShop extends Component{
     }
 }
 
-export default withClass(BookShop, "add-books");
+const mapStateToProps = (state) => {
+    return {
+        addBook : state.addBook,
+        otherBooks : state.otherBooks,
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchBookDataOnComponentMount : (limit) => dispatch(bookShopActionCreator.getBooksONMount(limit)),
+
+        // onChangeInputName : (key, event) => dispatch(actionCreators.humanNameChange(key, event)),
+        // onClickAge        : (key) => dispatch(actionCreators.humanAgeClick(key, "red")),
+        // showNextPaginateHumanData : () => dispatch(actionCreators.HumanNextPaginate(1)),
+        // showPrevPaginateHumanData : () => dispatch(actionCreators.HumanPrevPaginate(-1)),
+    };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withClass(BookShop, "add-books"));

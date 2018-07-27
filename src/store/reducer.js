@@ -28,7 +28,38 @@ const initialState = {
         id : 8 , name : "Qaiser baba", age : 37, color : "white"
       }
     ],
-    currenState : 0
+    currenState : 0,
+
+    otherBooks : [],
+    addBook : {
+        title : {
+            value : "",
+            isValid : true,
+            validation : {
+                required : true,
+                minLength : 5,
+                maxLength : 10,
+            },
+        },
+        description : {
+            value : "",
+            isValid : true,
+            validation : {
+                required : true,
+                minLength : 15,
+                maxLength : 20,
+            },
+        },
+        author : {
+            value : "",
+            isValid : true,
+            validation : {
+                required : true,
+                minLength : 5,
+                maxLength : 10,
+            },
+        }, 
+    },
 };
 
 const reducer = (state = initialState, action) => {
@@ -76,6 +107,14 @@ const reducer = (state = initialState, action) => {
             ],
             currenState : state.currenState + action.value,
         };
+    }
+
+    if(action.type === 'GET_BOOKS_ON_MOUNT'){
+        console.log("getting books from server hit !!! ");
+        return {
+            ...state,
+            otherBooks : action.value
+        }
     }
     return state;
 }
