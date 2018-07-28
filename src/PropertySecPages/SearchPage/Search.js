@@ -12,13 +12,14 @@ class Search extends Component {
     // }
 
     render(){
+        console.log("Hello Im search");
         return (
-            <section className="home">
+            <section className="search">
                 <HeaderComponent></HeaderComponent>
-                <AdvanceSearchBoxComponent></AdvanceSearchBoxComponent>
+                {/*<AdvanceSearchBoxComponent></AdvanceSearchBoxComponent>
                 <BreadcrumbComponent></BreadcrumbComponent>
                 <SearchListingComponent></SearchListingComponent>
-                <PaginationComponent></PaginationComponent>
+                <PaginationComponent></PaginationComponent>*/}
             </section>
         )
     }

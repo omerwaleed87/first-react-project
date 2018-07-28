@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
-import './PopularSearchComponent.css';
+import PopularSearchComponentStyle from './PopularSearchComponent.css';
 
 class PopularSearchComponent extends Component{
 
     render(){
         return (
-            <div className="popular-search">
-                <div className="heading">Popular Areas in UAE</div>
-                <div className="popular-container">
-                    <div className="popular-for-sale">
+            <div className={PopularSearchComponentStyle.popularSearch}>
+                <div className={PopularSearchComponentStyle.heading}>Popular Areas in UAE</div>
+                <div className={PopularSearchComponentStyle.popularContainer}>
+                    <div className={PopularSearchComponentStyle.popularForSale}>
                         <h3>Popular places for sale</h3>
-                        <ul className="popular-search-ul">
+                        <ul className={PopularSearchComponentStyle.popularSearchUl}>
                             <li>
                                 <NavLink to="/:purpose/:prop_type/:location/" title="For sale houses in Lahore">For sale houses in Lahore</NavLink>
                             </li>
@@ -30,9 +30,9 @@ class PopularSearchComponent extends Component{
                             </li>
                         </ul>
                     </div>
-                    <div className="popular-to-rent">
+                    <div className={PopularSearchComponentStyle.popularToRent}>
                         <h3>Popular places to rent</h3>
-                        <ul className="popular-search-ul-2">
+                        <ul className={PopularSearchComponentStyle.popularSearchUl}>
                             <li>
                                 <NavLink to="/:purpose/:prop_type/:location/" title="For sale houses in Lahore">For sale houses in Lahore</NavLink>
                             </li>

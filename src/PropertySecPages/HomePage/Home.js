@@ -7,10 +7,11 @@ import PopularSearchComponent from '../../PropertySecComponents/PopularSearchCom
 class Home extends Component {
 
     render(){
+        console.log(this.props);
         return (
             <section className="home">
                 <HeaderComponent></HeaderComponent>
-                <SearchBoxComponent></SearchBoxComponent>
+                <SearchBoxComponent page={this.props}></SearchBoxComponent>
                 <PopularSearchComponent></PopularSearchComponent>
             </section>
         );

@@ -18,22 +18,22 @@
     background-color: rgba(0,0,0,0.2);
 }
 
-.searchbox-container{
+.searchboxContainer{
     position : absolute;
     margin: 100px 330px 150px 500px;
 }
 
-.searchbox-filters {
+.searchboxFilters {
     background-color: black;
 }
 
-.searchbox-heading h1{
+.searchboxHeading h1{
     color : white;
     font-size: 30px;
     text-shadow: 0.2rem 0.2rem 0 rgba(0,0,0,.25);
 }
 
-.purpose-btn{
+.purposeBtn{
     margin: 50px 0 50px 170px;
 }
 
@@ -55,19 +55,19 @@
     margin-right: 20px;
 }
 
-.searchbox-container .first{
+.searchboxContainer .first{
     width : 100%;
     height : 50px;
     padding: 10px 10px 10px 10px;
 }
 
-.searchbox-container .first .location-filter{
+.searchboxContainer .first .locationFilter{
     width : 570px;
     height : 40px;
     padding: 5px;
     font-size: 18px;
 }
-.searchbox-container .first .searchbox-button{
+.searchboxContainer .first .searchboxButton{
     width : 119px;
     height : 50px;
     background-color : green;
@@ -78,27 +78,19 @@
     cursor: pointer;
 }
 
-.searchbox-container .second{
+.searchboxContainer .second{
     width : 100%;
     padding: 10px 10px 10px 10px;
 }
 
-.searchbox-container .second .prop-type-filter{
+.searchboxContainer .second .propTypeFilter{
     width : 220px;
     height : 30px;
     font-size: 16px;
     padding: 5px;
 }
 
-.searchbox-container .second .price-filter{
-    width : 220px;
-    height : 30px;
-    margin-left : 10px;
-    font-size: 16px;
-    padding: 5px;
-}
-
-.searchbox-container .second .beds-filter{
+.searchboxContainer .second .priceFilter{
     width : 220px;
     height : 30px;
     margin-left : 10px;
@@ -106,27 +98,35 @@
     padding: 5px;
 }
 
-.more-options {
+.searchboxContainer .second .bedsFilter{
+    width : 220px;
+    height : 30px;
+    margin-left : 10px;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.moreOptions {
     height: 22px;
 }
 
-.searchbox-options{
+.searchboxOptions{
     float: left;
     color : white;
     margin-left: 10px;
     cursor: pointer;
 }
 
-.searchbox-options:hover{
+.searchboxOptions:hover{
     color :blue;
 }
 
-.purpose-btn .purpose.active{
+.purposeBtnActive{
     background-color: white;
     color: black;
 } 
 
-.reset-filters {
+.resetFilters {
     background-color: black;
     border: none;
 }
