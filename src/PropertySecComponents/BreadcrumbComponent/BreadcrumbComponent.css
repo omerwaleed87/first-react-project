@@ -1,0 +1,26 @@
+.breadcrumb{
+    height: 95px;
+    /*background-color: gray;*/
+    width: 100%;
+    position: relative;
+    top: 209px;
+    display: block;
+}
+
+.breadcrumb .container{
+    position: relative;
+    left: 200px;
+    height: inherit;
+    width: 1287px;
+    /*background-color: yellow;*/
+}
+
+.breadcrumbTitle{
+    width: 400px;
+    height: 40px;
+    position: relative;
+    /*background-color: dodgerblue;*/
+    float: left;
+    font-size: 30px;
+    padding: 10px;
+}

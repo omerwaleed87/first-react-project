@@ -1,0 +1,84 @@
+.advSearchBox{
+    width: 100%;
+    height: 158px;
+    color: black;
+    display: block;
+    top: 50px;
+    background-color: black;
+    position: absolute;
+}
+
+.container{
+    left: 200px;
+    position: relative;
+    margin-right: 420px;
+    height: inherit;
+}
+
+.container .first{
+    position: relative;
+    width: inherit;
+    height: 75px;
+}
+.container .inputMargin{
+    margin: 10px 10px 0px 0px;
+    border-radius: 5px;
+    text-indent: 5px;
+}
+.container .first .purpose{
+    width: 110px;
+    height: 60px;
+    font-size: 20px;
+}
+
+.container .first .location{
+    width: 520px;
+    height: 60px;
+    font-size: 20px;
+}
+
+.container .first .type{
+    width: 295px;
+    height: 60px;
+    font-size: 20px;
+}
+
+.container .first .price{
+    width: 315px;
+    height: 60px;
+    font-size: 20px;
+    margin-right: 0px;
+}
+
+.container .second{
+    position: relative;
+    width: inherit;
+    height: 75px;
+}
+
+.container .second .beds{
+    width: 110px;
+    height: 58px;
+    font-size: 20px;
+}
+.container .second .area{
+    width: 310px;
+    height: 58px;
+    font-size: 20px;
+}
+.container .second .baths{
+    width: 167px;
+    height: 58px;
+    font-size: 20px;
+}
+.container .second .keyword{
+    width: 310px;
+    height: 58px;
+    font-size: 20px;
+}
+.container .second .agent{
+    width: 329px;
+    height: 58px;
+    font-size: 20px;
+    margin-right: 0px;
+}

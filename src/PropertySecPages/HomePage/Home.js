@@ -7,7 +7,6 @@ import PopularSearchComponent from '../../PropertySecComponents/PopularSearchCom
 class Home extends Component {
 
     render(){
-        console.log(this.props);
         return (
             <section className="home">
                 <HeaderComponent></HeaderComponent>

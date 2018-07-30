@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import HeaderComponent from '../../PropertySecComponents/HeaderComponent/HeaderComponent';
+import SearchHeaderComponent from '../../PropertySecComponents/SearchHeaderComponent/SearchHeaderComponent';
 import AdvanceSearchBoxComponent from '../../PropertySecComponents/AdvanceSearchBoxComponent/AdvanceSearchBoxComponent';
 import BreadcrumbComponent from '../../PropertySecComponents/BreadcrumbComponent/BreadcrumbComponent';
 import SearchListingComponent from '../../PropertySecComponents/SearchListingComponent/SearchListingComponent';
@@ -12,13 +12,12 @@ class Search extends Component {
     // }
 
     render(){
-        console.log("Hello Im search");
         return (
             <section className="search">
-                <HeaderComponent></HeaderComponent>
-                {/*<AdvanceSearchBoxComponent></AdvanceSearchBoxComponent>
-                <BreadcrumbComponent></BreadcrumbComponent>
-                <SearchListingComponent></SearchListingComponent>
+                <SearchHeaderComponent></SearchHeaderComponent>
+                <AdvanceSearchBoxComponent searchRouteParams={this.props}></AdvanceSearchBoxComponent>
+                <BreadcrumbComponent searchRouteParams={this.props}></BreadcrumbComponent>
+                {/*<SearchListingComponent></SearchListingComponent>
                 <PaginationComponent></PaginationComponent>*/}
             </section>
         )

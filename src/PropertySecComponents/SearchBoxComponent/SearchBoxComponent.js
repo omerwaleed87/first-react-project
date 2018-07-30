@@ -91,17 +91,17 @@ class SearchBoxComponent extends Component {
         let queryParams = [];
         let urlSegment = [
             "for-sale",
+            "property",
             "uae",
-            "property"
         ]
 
         for(let keys in stateParams){
             if( keys === "purposeId")
                 urlSegment[0] = (stateParams[keys] === 2) ? "to-rent" : urlSegment[0];
-            if( keys === "location")
-                urlSegment[1] = stateParams[keys] !== "" ? stateParams[keys] : "uae";
             if( keys === "propertyType")
-                urlSegment[2] = stateParams[keys] !== "" ? stateParams[keys] : "property";
+                urlSegment[1] = stateParams[keys] !== "" ? stateParams[keys] : "property";
+            if( keys === "location")
+                urlSegment[2] = stateParams[keys] !== "" ? stateParams[keys] : "uae";
             if( keys === "price" && stateParams[keys] !== "")
                 queryParams.push('price='+ stateParams[keys]);
             if( keys === "beds" && stateParams[keys] !== "")
