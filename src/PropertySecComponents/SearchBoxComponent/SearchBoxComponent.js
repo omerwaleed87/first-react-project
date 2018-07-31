@@ -105,7 +105,7 @@ class SearchBoxComponent extends Component {
             if( keys === "purposeId")
                 urlSegment[0] = (stateParams[keys] === 2) ? "to-rent" : urlSegment[0];
             if( keys === "propertyType")
-                urlSegment[1] = stateParams[keys] !== "" ? stateParams[keys] : "property";
+                urlSegment[1] = stateParams[keys] !== "" ? stateParams[keys] : "commercial-properties";
             if( keys === "location")
                 urlSegment[2] = stateParams[keys] !== "" ? stateParams[keys] : "uae";
             if( keys === "price" && stateParams[keys] !== "")
