@@ -1,0 +1,1 @@
+export const purpose = [{key : 1, value :"For Sale", url : "for-sale"},{ key : 2, value : "To Rent", url : "to-rent"}];

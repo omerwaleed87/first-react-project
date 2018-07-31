@@ -1,0 +1,70 @@
+.searchListings{
+    top: 209px;
+    position: relative;
+    /*background-color: yellow;*/
+    width: 100%;
+    min-height: 360px;
+}
+
+.container{
+    position: relative;
+    left: 199px;
+    /* right: 400px; */
+    /*background-color: green;*/
+    width: 1264px;
+    height: auto;
+    /* padding-right: 121px; */
+}
+
+.listings{
+    height: 300px;
+    width: 800px;
+    /*background-color: gray;*/
+    padding: 10px;
+    border-width: 10px;
+    background-color: black;
+}
+
+.listingsContainer{
+    width: inherit;
+    height: inherit;
+        background-color: white;
+}
+
+.image{
+    float: left;
+    padding: 10px;
+    height: 280px;
+    width: 310px;
+    background-color: lightgray;
+}
+
+.imageContainer{
+    width: inherit;
+    height: inherit;
+    background-color: darkblue;
+}
+
+.features{
+    float: right;
+    width: 450px;
+    padding: 10px;
+    height: inherit;
+
+}
+
+.price{
+    height: 35px;
+    font-size: 25px;
+}
+
+.location{
+    height: 30px;
+    font-size: 30px;
+}
+
+.description{
+    height: 20px;
+    font-size: 20px;
+    padding: 20px 0px 0px 0px;
+}

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import * as Type from "../../CachedContent/Types";
+
 import SearchBoxStyle from './SearchBoxComponent.css';
 
 class SearchBoxComponent extends Component {
@@ -41,7 +43,11 @@ class SearchBoxComponent extends Component {
     }
     onChangePropertyTypeFilter = (event) => {
         const searchBoxParams = {...this.state.parameters};
-        searchBoxParams.propertyType = event.target.value;
+        Type.types.map((val, key) => {
+            if(event.target.value == val.key){
+                searchBoxParams.propertyType = val.url;
+            }
+        });
         this.setState({parameters : searchBoxParams});
     }
     onChangePriceFilter = (event) => {
@@ -141,8 +147,9 @@ class SearchBoxComponent extends Component {
                             </button>
                         </div>
                         { this.state.moreFilter ? <div className={SearchBoxStyle.second}>
-                            <input type="text" onChange={(event) => this.onChangePropertyTypeFilter(event)} value={this.state.parameters.propertyType} 
-                                className={SearchBoxStyle.propTypeFilter} placeholder="Property Type" />
+                            <select onChange={(event) => this.onChangePropertyTypeFilter(event)} className={SearchBoxStyle.propTypeFilter}>
+                                {Type.types.map((x,y) => <option value={x.key} key={x.key}>{x.value}</option>)}
+                            </select>
                             <input type="text" onChange={(event) => this.onChangePriceFilter(event)} value={this.state.parameters.price}
                                 className={SearchBoxStyle.priceFilter} placeholder="Price" />
                             <input type="text" onChange={(event) => this.onChangeBedsFilter(event)} value={this.state.parameters.beds}

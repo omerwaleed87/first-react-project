@@ -1,6 +1,7 @@
 import * as homeSearchActions from '../../SearchBoxComponent/Store/Action';
 import * as AdvSearchActions from './Action';
 import * as BreadcrumbActions from '../../BreadcrumbComponent/Store/Action';
+import * as Types from "../../../CachedContent/Types";
 
 const initialState = {
     parameters : {
@@ -8,16 +9,22 @@ const initialState = {
         purpose : "for-sale",
         purposeText : "For Sale",
         location : "",
+        locationID : "",
         propertyType : "",
+        propertyTypeId : "",
         price : "",
         beds : "",
         area : "",
         baths : "",
         keyword : "",
-        agency : ""
+        agent : ""
     },
     breadcrumb : {
         title : "",
+    },
+    listings : {
+        list_items : {},
+        list_item_count : {},
     },
 };
 
@@ -41,13 +48,18 @@ const reducer = (state = initialState, action) => {
 
     if(action.type === BreadcrumbActions.BREADCRUMB_TITLE){
         const listOfStateParams = {...state.parameters};
-
+        let urlPropertyType = "";
+        Types.types.map((value, key) => {
+            if(value.key === state.parameters.propertyTypeId){
+                urlPropertyType = value.value;
+            }
+        });
         return{
             parameters : {
                 ...state.parameters
             },
             breadcrumb : {
-                title : state.parameters.propertyType + " " + state.parameters.purposeText + " in " + state.parameters.location
+                title : urlPropertyType + " " + state.parameters.purposeText + " in " + state.parameters.location
             }
         };
 

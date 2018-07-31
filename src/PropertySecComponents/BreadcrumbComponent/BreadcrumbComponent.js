@@ -16,7 +16,9 @@ class BreadcrumbComponent extends Component {
     }
 
     shouldComponentUpdate(nextState, b){
-        if(nextState.breadcrumb.title !== this.props.breadcrumb.title || nextState.parameters.purposeId !== this.props.parameters.purposeId)
+        if(nextState.breadcrumb.title !== this.props.breadcrumb.title 
+            || nextState.parameters.purposeId !== this.props.parameters.purposeId
+            || nextState.parameters.propertyTypeId !== this.props.parameters.propertyTypeId)
             return true;
         return false;
     }
@@ -25,8 +27,14 @@ class BreadcrumbComponent extends Component {
         return (
             <div className={BreadcrumbComponentStyle.breadcrumb}>
                 <div className={BreadcrumbComponentStyle.container}>
+                    <div className={BreadcrumbComponentStyle.breadcrumbs}>
+                        "Breadcrumbs"
+                    </div>
                     <div className={BreadcrumbComponentStyle.breadcrumbTitle}>
                         {this.props.breadcrumb.title}
+                    </div>
+                    <div className={BreadcrumbComponentStyle.listingCounts}>
+                        "Listings Count"
                     </div>
                 </div>
             </div>

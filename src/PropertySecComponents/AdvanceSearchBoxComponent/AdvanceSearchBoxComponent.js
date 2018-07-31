@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import { connect } from 'react-redux';
 
 import * as AdvSearchBoxActionCreator from "./Store/Action";
+import * as PropertyTypes from "../../CachedContent/Types";
+import * as PurposeOptions from "../../CachedContent/Purpose";
 
 import AdvanceSearchBoxStyle from "./AdvanceSearchBoxComponent.css";
 
@@ -33,16 +35,17 @@ class AdvanceSearchBoxComponent extends Component{
     render(){
         if(typeof this.props.parameters !== "undefined"){
             const searchBoxInput = this.searchBoxInputStyles();
-            const options = [{key : 1, value :"For Sale"},{ key : 2, value : "To Rent"}];
             return (
                 <div className={AdvanceSearchBoxStyle.advSearchBox}>
                     <div className={AdvanceSearchBoxStyle.container}>
                         <div className={AdvanceSearchBoxStyle.first}>
                             <select onChange={(event, routes) => this.props.onChangePurpose(event, this.props.searchRouteParams)} className={searchBoxInput["uperInputs"]["purposeInputMargin"].join(" ")}>
-                                {options.map((x,y) => <option value={x.key} key={x.key} selected={x.key === this.props.parameters.purposeId ? "selected" : ""}>{x.value}</option>)}
+                                {PurposeOptions.purpose.map((x,y) => <option value={x.key} key={x.key} selected={x.key === this.props.parameters.purposeId ? "selected" : ""}>{x.value}</option>)}
                             </select>
                             <input className={searchBoxInput["uperInputs"]["locationInputMargin"].join(" ")} type="text" value={""} placeholder="Location"/>
-                            <input className={searchBoxInput["uperInputs"]["typeInputMargin"].join(" ")} type="text" value={""} placeholder="Property Type"/>
+                            <select onChange={(event, routes) => this.props.onChangePropType(event, this.props.searchRouteParams)} className={searchBoxInput["uperInputs"]["typeInputMargin"].join(" ")}>
+                                {PropertyTypes.types.map((x,y) => <option value={x.key} key={x.key} selected={x.key === this.props.parameters.propertyTypeId ? "selected" : ""}>{x.value}</option>)}
+                            </select>
                             <input className={searchBoxInput["uperInputs"]["priceInputMargin"].join(" ")} type="text" value={""} placeholder="Price"/>
                         </div>
                         <div className={AdvanceSearchBoxStyle.second}>
@@ -73,6 +76,7 @@ const mapDispatchToProps = dispatch => {
     return {
         mountRouteParamsToSearchFilters : (routeParams) => dispatch(AdvSearchBoxActionCreator.getSearchParamsOnMount(routeParams)),
         onChangePurpose : (event, routes) => dispatch(AdvSearchBoxActionCreator.changePurpose(event, routes)), 
+        onChangePropType : (event, routes) => dispatch(AdvSearchBoxActionCreator.changePropertyType(event, routes)), 
     };
 }
 

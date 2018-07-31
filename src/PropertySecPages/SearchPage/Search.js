@@ -17,8 +17,8 @@ class Search extends Component {
                 <SearchHeaderComponent></SearchHeaderComponent>
                 <AdvanceSearchBoxComponent searchRouteParams={this.props}></AdvanceSearchBoxComponent>
                 <BreadcrumbComponent searchRouteParams={this.props}></BreadcrumbComponent>
-                {/*<SearchListingComponent></SearchListingComponent>
-                <PaginationComponent></PaginationComponent>*/}
+                <SearchListingComponent></SearchListingComponent>
+                {/*<PaginationComponent></PaginationComponent>*/}
             </section>
         )
     }
