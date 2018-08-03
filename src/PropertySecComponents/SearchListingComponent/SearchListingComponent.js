@@ -1,33 +1,68 @@
 import React, { Component } from "react";
+
 import { connect } from 'react-redux';
 
+import * as ListingActionCreator from './Store/Action';
 import SearchListingStyles from "./SearchListingComponent.css";
+import ListingFeaturesTemplate from "./Template/Features";
 
 class SearchListingComponent extends Component{
+
+    hasMounted = false;
+
+    componentDidMount(){
+        this.props.mountListings();
+    }
+
+    componentWillUpdate(nextState, b){
+        if(nextState.parameters.purposeId !== this.props.parameters.purposeId
+            || nextState.parameters.propertyTypeId !== this.props.parameters.propertyTypeId)
+                this.props.mountListings();
+    }
+
+    renderListings = () => {
+        const listingData = this.props.listings;
+        let listingArray = [];
+        for (let x in listingData){
+            listingArray.push(listingData[x]);
+        }
+        return listingArray.map((val, key) => {
+            return <ListingFeaturesTemplate price={val.price}
+                      locationData={val.locationdetail}
+                      description={val.description}
+                      key={key}>
+                   </ListingFeaturesTemplate>
+        });
+    }
+
     render(){
-        return(
-            <div className={SearchListingStyles.searchListings}>
-                <div className={SearchListingStyles.container}>
-
-                    <div className={SearchListingStyles.listings}>
-                        <div className={SearchListingStyles.listingsContainer}>
-                            <div className={SearchListingStyles.image}>
-                                <div className={SearchListingStyles.imageContainer}>
-                                    
-                                </div>
-                            </div>
-                            <div className={SearchListingStyles.features}>
-                                <div className={SearchListingStyles.price}>100000 AED</div>
-                                <div className={SearchListingStyles.location}>Dubai Marin, UAE</div>
-                                <div className={SearchListingStyles.description}>Hello this is my first property</div>
-                            </div>
-                        </div>
+        if(typeof this.props.listings){
+            const listingTemplateData = this.renderListings();
+            return(
+                <div className={SearchListingStyles.searchListings}>
+                    <div className={SearchListingStyles.container}>
+                        {listingTemplateData}
                     </div>
-
                 </div>
-            </div>
-        )
+            )
+        }
+        return null;
     }
 }
 
-export default SearchListingComponent;
+const mapStateToProps = state => {
+    if(typeof state !== "undefined"){
+        return {
+            listings : state.listings,
+            parameters : state.parameters,
+        };
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        mountListings : () => dispatch(ListingActionCreator.getListingsOnMount()),
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchListingComponent);

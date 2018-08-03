@@ -1,2 +1,2 @@
 export const types = [{key : 1, value :"Commercial Property", url : "commercial-properties"},{key : 2, value : "Residential Property", url : "residential-properties"}, 
-                      {key : 3, value : "Apartment", url : "apartment"},{key : 4, value : "Houses", url : "houses"}];
+                      {key : 3, value : "Apartment", url : "apartment"},{key : 4, value : "House", url : "house"}];

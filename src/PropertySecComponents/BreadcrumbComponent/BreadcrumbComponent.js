@@ -1,44 +1,50 @@
 import React, { Component } from 'react';
 // import { NavLink } from "react-router-dom";
 import { connect } from 'react-redux';
+import { NavLink } from "react-router-dom";
 
 import * as BreadCrumbActionCreator from './Store/Action';
 import BreadcrumbComponentStyle from './BreadcrumbComponent.css';
 
 class BreadcrumbComponent extends Component {
 
-    componentWillMount(){
+    componentDidMount(){
         this.props.mountBreadcrumbTitle();
     }
 
-    componentWillUpdate(){
-        this.props.mountBreadcrumbTitle();
-    }
-
-    shouldComponentUpdate(nextState, b){
-        if(nextState.breadcrumb.title !== this.props.breadcrumb.title 
-            || nextState.parameters.purposeId !== this.props.parameters.purposeId
-            || nextState.parameters.propertyTypeId !== this.props.parameters.propertyTypeId)
-            return true;
+    componentWillUpdate(nextState, b){
+        if(nextState !== "undefined" && this.props !== "undefined"){
+            if(nextState.parameters.purposeId !== this.props.parameters.purposeId
+                || nextState.parameters.propertyTypeId !== this.props.parameters.propertyTypeId)
+                this.props.mountBreadcrumbTitle();
+        }
         return false;
     }
 
     render(){
-        return (
-            <div className={BreadcrumbComponentStyle.breadcrumb}>
-                <div className={BreadcrumbComponentStyle.container}>
-                    <div className={BreadcrumbComponentStyle.breadcrumbs}>
-                        "Breadcrumbs"
-                    </div>
-                    <div className={BreadcrumbComponentStyle.breadcrumbTitle}>
-                        {this.props.breadcrumb.title}
-                    </div>
-                    <div className={BreadcrumbComponentStyle.listingCounts}>
-                        "Listings Count"
+        if(this.props.breadcrumb.breadcrumb){
+            return (
+                <div className={BreadcrumbComponentStyle.breadcrumb}>
+                    <div className={BreadcrumbComponentStyle.container}>
+                        <div className={BreadcrumbComponentStyle.breadcrumbs}>
+                            <NavLink to={this.props.breadcrumb.breadcrumb.locBreadcrumb[0].url} title={this.props.breadcrumb.breadcrumb.locBreadcrumb[0].locationTitle}>
+                                {this.props.breadcrumb.breadcrumb.locBreadcrumb[0].title}
+                            </NavLink>
+                            <NavLink to={this.props.breadcrumb.breadcrumb.locBreadcrumb[1].url} title={this.props.breadcrumb.breadcrumb.locBreadcrumb[1].locationTitle}>
+                                {this.props.breadcrumb.breadcrumb.locBreadcrumb[1].title}
+                            </NavLink>
+                        </div>
+                        <div className={BreadcrumbComponentStyle.breadcrumbTitle}>
+                            {this.props.breadcrumb.breadcrumb.breadcrumbTitle}
+                        </div>
+                        <div className={BreadcrumbComponentStyle.listingCounts}>
+                            "Listings Count"
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
+        return null;
     }
 }
 
@@ -49,7 +55,6 @@ const mapStateToProps = state => {
             breadcrumb : state.breadcrumb
         };
     }
-    return {};
 }
 
 const mapDispatchToProps = dispatch => {

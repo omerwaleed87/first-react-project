@@ -12,7 +12,7 @@ class App extends Component {
       <section className="property-section">
           <Switch>
               <Route path="/" exact component={HomePage}></Route>
-              <Route path="/:purpose/:propertyType/:location/" exact component={SearchPage}></Route>
+              <Route path="/:purpose/:propertyType/:location/" component={SearchPage}></Route>
               {/*<Route path="/for-sale/houses/lahore/:selector" exact component={ViewPage}></Route>*/}
           </Switch>
       </section>

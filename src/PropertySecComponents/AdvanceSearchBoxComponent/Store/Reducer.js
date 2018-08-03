@@ -1,6 +1,6 @@
-import * as homeSearchActions from '../../SearchBoxComponent/Store/Action';
 import * as AdvSearchActions from './Action';
 import * as BreadcrumbActions from '../../BreadcrumbComponent/Store/Action';
+import * as ListingActions from '../../SearchListingComponent/Store/Action';
 import * as Types from "../../../CachedContent/Types";
 
 const initialState = {
@@ -19,13 +19,8 @@ const initialState = {
         keyword : "",
         agent : ""
     },
-    breadcrumb : {
-        title : "",
-    },
-    listings : {
-        list_items : {},
-        list_item_count : {},
-    },
+    breadcrumb : {},
+    listings : {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -40,6 +35,9 @@ const reducer = (state = initialState, action) => {
             },
             breadcrumb : {
                 ...state.breadcrumb
+            },
+            listings : {
+                ...state.listings
             }
         };
 
@@ -48,23 +46,38 @@ const reducer = (state = initialState, action) => {
 
     if(action.type === BreadcrumbActions.BREADCRUMB_TITLE){
         const listOfStateParams = {...state.parameters};
-        let urlPropertyType = "";
-        Types.types.map((value, key) => {
-            if(value.key === state.parameters.propertyTypeId){
-                urlPropertyType = value.value;
-            }
-        });
         return{
             parameters : {
                 ...state.parameters
             },
             breadcrumb : {
-                title : urlPropertyType + " " + state.parameters.purposeText + " in " + state.parameters.location
+                ...action.value
+            },
+            listings : {
+                ...state.listings
             }
         };
 
         return state;
     }
+
+    if(action.type === "LISTING"){
+        
+        return{
+            parameters : {
+                ...state.parameters
+            },
+            breadcrumb : {
+                ...state.breadcrumb
+            },
+            listings : {
+                ...action.value
+            }
+        };
+
+        return state;
+    }
+
     if(action.type === AdvSearchActions.ADV_SEARCH_PURPOSE){
         const listOfStateParams = {...state.parameters};
 
@@ -75,6 +88,9 @@ const reducer = (state = initialState, action) => {
             },
             breadcrumb : {
                 ...state.breadcrumb
+            },
+            listings : {
+                ...state.listings
             }
         };
 

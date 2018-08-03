@@ -22,13 +22,13 @@
     /*background-color: gray;*/
     padding: 10px;
     border-width: 10px;
-    background-color: black;
+    /*background-color: black;*/
 }
 
 .listingsContainer{
     width: inherit;
     height: inherit;
-        background-color: white;
+        /*background-color: white;*/
 }
 
 .image{
@@ -36,13 +36,13 @@
     padding: 10px;
     height: 280px;
     width: 310px;
-    background-color: lightgray;
+    /*background-color: lightgray;*/
 }
 
 .imageContainer{
     width: inherit;
     height: inherit;
-    background-color: darkblue;
+    /*background-color: darkblue;*/
 }
 
 .features{

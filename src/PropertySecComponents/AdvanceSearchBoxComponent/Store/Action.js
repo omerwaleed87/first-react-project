@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import * as PropertyTypes from "../../../CachedContent/Types";
 import * as PurposeOptions from "../../../CachedContent/Purpose";
 
@@ -23,6 +25,7 @@ export const getSearchParamsOnMount = (params) => {
             propertyType = value.url;
             propertyId = value.key;
         }
+        return value;
     });
 
     let queryParamsArray = [];
@@ -39,6 +42,7 @@ export const getSearchParamsOnMount = (params) => {
             splitSeperatorFromQuery = value.split("=");
             nKey = splitSeperatorFromQuery[0];
             queryParamsWithIndex[nKey] = splitSeperatorFromQuery[1];
+            return value;
         });
     }
 

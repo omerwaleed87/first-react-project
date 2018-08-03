@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import * as Type from "../../CachedContent/Types";
 
@@ -47,6 +46,7 @@ class SearchBoxComponent extends Component {
             if(event.target.value == val.key){
                 searchBoxParams.propertyType = val.url;
             }
+            return val;
         });
         this.setState({parameters : searchBoxParams});
     }
@@ -97,7 +97,7 @@ class SearchBoxComponent extends Component {
         let queryParams = [];
         let urlSegment = [
             "for-sale",
-            "property",
+            "commercial-properties",
             "uae",
         ]
 
@@ -105,9 +105,9 @@ class SearchBoxComponent extends Component {
             if( keys === "purposeId")
                 urlSegment[0] = (stateParams[keys] === 2) ? "to-rent" : urlSegment[0];
             if( keys === "propertyType")
-                urlSegment[1] = stateParams[keys] !== "" ? stateParams[keys] : "commercial-properties";
+                urlSegment[1] = stateParams[keys] !== "" ? stateParams[keys] : urlSegment[1];
             if( keys === "location")
-                urlSegment[2] = stateParams[keys] !== "" ? stateParams[keys] : "uae";
+                urlSegment[2] = stateParams[keys] !== "" ? stateParams[keys] : urlSegment[2];
             if( keys === "price" && stateParams[keys] !== "")
                 queryParams.push('price='+ stateParams[keys]);
             if( keys === "beds" && stateParams[keys] !== "")

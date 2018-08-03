@@ -32,6 +32,13 @@ class AdvanceSearchBoxComponent extends Component{
         this.props.mountRouteParamsToSearchFilters(routeParams);
     }
 
+    componentWillUpdate(nextState, b){
+        if(nextState.searchRouteParams.location.pathname !== this.props.searchRouteParams.location.pathname){
+            const routeParams = {...nextState.searchRouteParams};
+            this.props.mountRouteParamsToSearchFilters(routeParams);
+        }
+    }
+
     render(){
         if(typeof this.props.parameters !== "undefined"){
             const searchBoxInput = this.searchBoxInputStyles();
