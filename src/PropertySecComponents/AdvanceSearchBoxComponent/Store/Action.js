@@ -7,7 +7,8 @@ export const ADV_SEARCH_FILTERS = "ADV_SEARCH_FILTERS";
 export const ADV_SEARCH_PURPOSE = "ADV_SEARCH_PURPOSE";
 
 export const getSearchParamsOnMount = (params) => {
-    const urlSegment = params.match.params;
+    
+    let urlSegment = params.match.params;
     const queryParams = params.location.search;
 
     let purposeTextParam = "For Sale";

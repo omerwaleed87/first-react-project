@@ -22,17 +22,21 @@ class BreadcrumbComponent extends Component {
     }
 
     render(){
+        
         if(this.props.breadcrumb.breadcrumb){
+            let breadcrumblocs = [];
+            for(let x in this.props.breadcrumb.breadcrumb.locBreadcrumb){
+                breadcrumblocs.push(this.props.breadcrumb.breadcrumb.locBreadcrumb[x]);
+            }
             return (
                 <div className={BreadcrumbComponentStyle.breadcrumb}>
                     <div className={BreadcrumbComponentStyle.container}>
                         <div className={BreadcrumbComponentStyle.breadcrumbs}>
-                            <NavLink to={this.props.breadcrumb.breadcrumb.locBreadcrumb[0].url} title={this.props.breadcrumb.breadcrumb.locBreadcrumb[0].locationTitle}>
-                                {this.props.breadcrumb.breadcrumb.locBreadcrumb[0].title}
-                            </NavLink>
-                            <NavLink to={this.props.breadcrumb.breadcrumb.locBreadcrumb[1].url} title={this.props.breadcrumb.breadcrumb.locBreadcrumb[1].locationTitle}>
-                                {this.props.breadcrumb.breadcrumb.locBreadcrumb[1].title}
-                            </NavLink>
+                            {breadcrumblocs.map((value, key) => {
+                                return <NavLink to={value.url} title={value.locationTitle} key={key}>
+                                        {value.title}
+                                    </NavLink>    
+                            })}
                         </div>
                         <div className={BreadcrumbComponentStyle.breadcrumbTitle}>
                             {this.props.breadcrumb.breadcrumb.breadcrumbTitle}
