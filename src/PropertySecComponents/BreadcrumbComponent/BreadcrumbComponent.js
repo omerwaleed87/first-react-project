@@ -9,14 +9,15 @@ import BreadcrumbComponentStyle from './BreadcrumbComponent.css';
 class BreadcrumbComponent extends Component {
 
     componentDidMount(){
-        this.props.mountBreadcrumbTitle();
+        this.props.mountBreadcrumbTitle(this.props.parameters);
     }
 
     componentWillUpdate(nextState, b){
         if(nextState !== "undefined" && this.props !== "undefined"){
             if(nextState.parameters.purposeId !== this.props.parameters.purposeId
-                || nextState.parameters.propertyTypeId !== this.props.parameters.propertyTypeId)
-                this.props.mountBreadcrumbTitle();
+                || nextState.parameters.propertyTypeId !== this.props.parameters.propertyTypeId
+                || nextState.parameters.location !== this.props.parameters.location)
+                this.props.mountBreadcrumbTitle(nextState.parameters);
         }
         return false;
     }
@@ -28,14 +29,18 @@ class BreadcrumbComponent extends Component {
             for(let x in this.props.breadcrumb.breadcrumb.locBreadcrumb){
                 breadcrumblocs.push(this.props.breadcrumb.breadcrumb.locBreadcrumb[x]);
             }
+            breadcrumblocs.reverse();
             return (
                 <div className={BreadcrumbComponentStyle.breadcrumb}>
                     <div className={BreadcrumbComponentStyle.container}>
                         <div className={BreadcrumbComponentStyle.breadcrumbs}>
                             {breadcrumblocs.map((value, key) => {
-                                return <NavLink to={value.url} title={value.locationTitle} key={key}>
-                                        {value.title}
-                                    </NavLink>    
+                                return <div key={key} className={BreadcrumbComponentStyle.breadcrumbaArrow}>
+                                            <NavLink to={value.url} title={value.locationTitle}>
+                                                {value.title}
+                                            </NavLink>
+                                            <i> > </i>
+                                       </div>    
                             })}
                         </div>
                         <div className={BreadcrumbComponentStyle.breadcrumbTitle}>
@@ -59,11 +64,13 @@ const mapStateToProps = state => {
             breadcrumb : state.breadcrumb
         };
     }
+    else
+        return {};
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        mountBreadcrumbTitle : () => dispatch(BreadCrumbActionCreator.getBreadCrumbTitleOnMount()),
+        mountBreadcrumbTitle : (stateParams) => dispatch(BreadCrumbActionCreator.getBreadCrumbTitleOnMount(stateParams)),
     };
 }
 

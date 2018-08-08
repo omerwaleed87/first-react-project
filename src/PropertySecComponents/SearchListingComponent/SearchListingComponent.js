@@ -11,13 +11,14 @@ class SearchListingComponent extends Component{
     hasMounted = false;
 
     componentDidMount(){
-        this.props.mountListings();
+        this.props.mountListings(this.props.parameters);
     }
 
     componentWillUpdate(nextState, b){
         if(nextState.parameters.purposeId !== this.props.parameters.purposeId
-            || nextState.parameters.propertyTypeId !== this.props.parameters.propertyTypeId)
-                this.props.mountListings();
+            || nextState.parameters.propertyTypeId !== this.props.parameters.propertyTypeId
+            || nextState.parameters.location !== this.props.parameters.location)
+                this.props.mountListings(nextState.parameters);
     }
 
     renderListings = () => {
@@ -30,6 +31,8 @@ class SearchListingComponent extends Component{
             return <ListingFeaturesTemplate price={val.price}
                       locationData={val.locationdetail}
                       description={val.description}
+                      image={val.imagedetail}
+                      type={val.typeDetail}
                       key={key}>
                    </ListingFeaturesTemplate>
         });
@@ -61,7 +64,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        mountListings : () => dispatch(ListingActionCreator.getListingsOnMount()),
+        mountListings : (stateParams) => dispatch(ListingActionCreator.getListingsOnMount(stateParams)),
     };
 }
 

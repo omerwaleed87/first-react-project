@@ -27,21 +27,43 @@ class AdvanceSearchBoxComponent extends Component{
         return searchBoxInput;
     }
 
-    componentWillMount(){
+    componentWillMount(nextState, b){
         const routeParams = {...this.props.searchRouteParams};
-        this.props.mountRouteParamsToSearchFilters(routeParams);
+        this.props.mountRouteParamsToSearchFilters(routeParams, this.props.types, this.props.locations);
     }
 
     componentWillUpdate(nextState, b){
         if(nextState.searchRouteParams.location.pathname !== this.props.searchRouteParams.location.pathname){
             const routeParams = {...nextState.searchRouteParams};
-            this.props.mountRouteParamsToSearchFilters(routeParams);
+            this.props.mountRouteParamsToSearchFilters(routeParams, nextState.types, nextState.locations);
         }
     }
 
+    pushTypesCache = () => {
+        let cachedTypes = [];
+        const typeList = {...this.props.types};
+        for(let x in typeList){
+            cachedTypes.push(typeList[x]);
+        }
+        return cachedTypes;
+    }
+
+    pushLocationCache = () => {
+        let cachedLocation = [];
+        const locationList = {...this.props.locations};
+        for(let x in locationList){
+            cachedLocation.push(locationList[x]);
+        }
+        return cachedLocation;
+    }
+
     render(){
+        
         if(typeof this.props.parameters !== "undefined"){
             const searchBoxInput = this.searchBoxInputStyles();
+            let cachedPropType = typeof this.props.types !== "undefined" ? this.pushTypesCache() : {};
+            let cachedLocation = (typeof this.props.locations !== "undefined") ? this.pushLocationCache() : {};
+            
             return (
                 <div className={AdvanceSearchBoxStyle.advSearchBox}>
                     <div className={AdvanceSearchBoxStyle.container}>
@@ -49,9 +71,11 @@ class AdvanceSearchBoxComponent extends Component{
                             <select onChange={(event, routes) => this.props.onChangePurpose(event, this.props.searchRouteParams)} className={searchBoxInput["uperInputs"]["purposeInputMargin"].join(" ")}>
                                 {PurposeOptions.purpose.map((x,y) => <option value={x.key} key={x.key} selected={x.key === this.props.parameters.purposeId ? "selected" : ""}>{x.value}</option>)}
                             </select>
-                            <input className={searchBoxInput["uperInputs"]["locationInputMargin"].join(" ")} type="text" value={""} placeholder="Location"/>
-                            <select onChange={(event, routes) => this.props.onChangePropType(event, this.props.searchRouteParams)} className={searchBoxInput["uperInputs"]["typeInputMargin"].join(" ")}>
-                                {PropertyTypes.types.map((x,y) => <option value={x.key} key={x.key} selected={x.key === this.props.parameters.propertyTypeId ? "selected" : ""}>{x.value}</option>)}
+                            <select onChange={(event, routes) => this.props.onChangeLocationFilter(event, this.props.searchRouteParams, this.props.locations)} className={searchBoxInput["uperInputs"]["locationInputMargin"].join(" ")}>
+                                {cachedLocation.map((x,y) => <option value={x.id} key={x.id} selected={x.id == this.props.parameters.locationId ? "selected" : ""}>{x.title}</option>)}
+                            </select>
+                            <select onChange={(event, routes) => this.props.onChangePropType(event, this.props.searchRouteParams, this.props.types)} className={searchBoxInput["uperInputs"]["typeInputMargin"].join(" ")}>
+                                {cachedPropType.map((x,y) => <option value={x.id} key={x.id} selected={x.id == this.props.parameters.propertyTypeId ? "selected" : ""}>{x.title}</option>)}
                             </select>
                             <input className={searchBoxInput["uperInputs"]["priceInputMargin"].join(" ")} type="text" value={""} placeholder="Price"/>
                         </div>
@@ -73,7 +97,9 @@ class AdvanceSearchBoxComponent extends Component{
 const mapStateToProps = state => {
     if(typeof state !== "undefined"){
         return {
-            parameters : state.parameters
+            parameters : state.parameters,
+            locations : state.locations,
+            types : state.types
         };
     }
     return {};
@@ -81,9 +107,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        mountRouteParamsToSearchFilters : (routeParams) => dispatch(AdvSearchBoxActionCreator.getSearchParamsOnMount(routeParams)),
+        mountRouteParamsToSearchFilters : (routeParams, types, locations) => dispatch(AdvSearchBoxActionCreator.getSearchParamsOnMount(routeParams, types, locations)),
         onChangePurpose : (event, routes) => dispatch(AdvSearchBoxActionCreator.changePurpose(event, routes)), 
-        onChangePropType : (event, routes) => dispatch(AdvSearchBoxActionCreator.changePropertyType(event, routes)), 
+        onChangePropType : (event, routes, types) => dispatch(AdvSearchBoxActionCreator.changePropertyType(event, routes, types)), 
+        onChangeLocationFilter : (event, routes, location) => dispatch(AdvSearchBoxActionCreator.changeLocationFilter(event, routes, location)), 
     };
 }
 

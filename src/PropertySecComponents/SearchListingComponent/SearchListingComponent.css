@@ -17,12 +17,13 @@
 }
 
 .listings{
-    height: 300px;
+    height: 252px;
     width: 800px;
     /*background-color: gray;*/
     padding: 10px;
     border-width: 10px;
     /*background-color: black;*/
+    background-color: #f8f9fb;
 }
 
 .listingsContainer{
@@ -60,11 +61,20 @@
 
 .location{
     height: 30px;
-    font-size: 30px;
+    font-size: 20px;
+}
+.type{
+    height: 30px;
+    font-size: 18px;
+    padding-top: 5px;
 }
 
 .description{
     height: 20px;
-    font-size: 20px;
+    font-size: 16px;
     padding: 20px 0px 0px 0px;
+}
+
+.containerImage{
+    width: 100%;
 }

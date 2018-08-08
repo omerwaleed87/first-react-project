@@ -1,14 +1,20 @@
 import axios from 'axios';
 
-import * as PropertyTypes from "../../../CachedContent/Types";
+// import * as PropertyTypes from "../../../CachedContent/Types";
 import * as PurposeOptions from "../../../CachedContent/Purpose";
 
 export const ADV_SEARCH_FILTERS = "ADV_SEARCH_FILTERS";
 export const ADV_SEARCH_PURPOSE = "ADV_SEARCH_PURPOSE";
 
-export const getSearchParamsOnMount = (params) => {
-    
+export const getSearchParamsOnMount = (params, PropertyTypes, LocationData) => {
+
     let urlSegment = params.match.params;
+    if(typeof urlSegment[0] !== "undefined" && urlSegment[0] !== ""){
+        urlSegment.location += "/"+ urlSegment[0].replace(/\/$/, "");
+    }
+    delete urlSegment[0];
+    delete urlSegment[1];
+
     const queryParams = params.location.search;
 
     let purposeTextParam = "For Sale";
@@ -18,17 +24,22 @@ export const getSearchParamsOnMount = (params) => {
         purposeTextParam = "To Rent";
         purposeIdParam = 2;
     }
-
-    let propertyType = "";
-    let propertyId = "";
-    PropertyTypes.types.map((value, key) => {
-        if(urlSegment.propertyType === value.url){
-            propertyType = value.url;
-            propertyId = value.key;
+    let stateSegments = {};
+    if(PropertyTypes !== "undefined"){
+        for(let x in PropertyTypes){
+            if(urlSegment.propertyType === PropertyTypes[x].url){
+                stateSegments.propertyTypeId = PropertyTypes[x].id;
+            }
         }
-        return value;
-    });
-
+    }
+    if(LocationData !== "undefined"){
+        for(let x in LocationData){
+            if(urlSegment.location === LocationData[x].key){
+                stateSegments.locationId = LocationData[x].id;
+            }
+        }
+    }
+    
     let queryParamsArray = [];
     let queryParamsWithIndex = [];
 
@@ -51,8 +62,7 @@ export const getSearchParamsOnMount = (params) => {
         ...urlSegment,
         purposeText: purposeTextParam,
         purposeId : purposeIdParam,
-        propertyType : propertyType,
-        propertyTypeId : propertyId,
+        ...stateSegments,
         ...queryParamsWithIndex
     };
 
@@ -90,17 +100,17 @@ export const changePurpose = (event, routes) => {
     };
 }
 
-export const changePropertyType = (event, routes) => {
+export const changePropertyType = (event, routes, PropertyTypes) => {
 
     let propertyType = "";
     let propertyId = "";
-    
-    PropertyTypes.types.map((value, key) => {
-        if(event.target.value == value.key){
-            propertyType = value.url;
-            propertyId = value.key;
+
+    for(let x in PropertyTypes){
+        if(event.target.value === PropertyTypes[x].id){
+            propertyType = PropertyTypes[x].url;
+            propertyId = PropertyTypes[x].id;
         }
-    });
+    }
 
     routes.history.push("/"+ routes.match.params.purpose +"/"+ propertyType +"/"+ routes.match.params.location +"/");
     
@@ -112,5 +122,22 @@ export const changePropertyType = (event, routes) => {
     return {
         type : ADV_SEARCH_PURPOSE,
         value : stateParams,
+    };
+}
+export const changeLocationFilter = (event, routes, Location) => {
+
+    let locationParams = {};
+    for(let x in Location){
+        if(event.target.value === Location[x].id){
+            locationParams.location = Location[x].key;
+            locationParams.locationId = parseInt(Location[x].id);
+        }
+    }
+
+    routes.history.push("/"+ routes.match.params.purpose +"/"+ routes.match.params.propertyType +"/"+ locationParams.location +"/");
+    
+    return {
+        type : ADV_SEARCH_PURPOSE,
+        value : locationParams,
     };
 }

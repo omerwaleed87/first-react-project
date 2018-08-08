@@ -2,6 +2,7 @@ import * as AdvSearchActions from './Action';
 import * as BreadcrumbActions from '../../BreadcrumbComponent/Store/Action';
 import * as ListingActions from '../../SearchListingComponent/Store/Action';
 import * as Types from "../../../CachedContent/Types";
+import * as CacheAction from "../../CacheComponent/Store/Action";
 
 const initialState = {
     parameters : {
@@ -9,7 +10,7 @@ const initialState = {
         purpose : "for-sale",
         purposeText : "For Sale",
         location : "",
-        locationID : "",
+        locationId : "",
         propertyType : "",
         propertyTypeId : "",
         price : "",
@@ -21,6 +22,9 @@ const initialState = {
     },
     breadcrumb : {},
     listings : {},
+    locations : {},
+    purpose : {},
+    types : {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -38,6 +42,15 @@ const reducer = (state = initialState, action) => {
             },
             listings : {
                 ...state.listings
+            },
+            locations : {
+                ...state.locations
+            },
+            types : {
+                ...state.types
+            },
+            purpose : {
+                ...state.purpose
             }
         };
 
@@ -55,6 +68,15 @@ const reducer = (state = initialState, action) => {
             },
             listings : {
                 ...state.listings
+            },
+            locations : {
+                ...state.locations
+            },
+            types : {
+                ...state.types
+            },
+            purpose : {
+                ...state.purpose
             }
         };
 
@@ -72,6 +94,15 @@ const reducer = (state = initialState, action) => {
             },
             listings : {
                 ...action.value
+            },
+            locations : {
+                ...state.locations
+            },
+            types : {
+                ...state.types
+            },
+            purpose : {
+                ...state.purpose
             }
         };
 
@@ -80,7 +111,6 @@ const reducer = (state = initialState, action) => {
 
     if(action.type === AdvSearchActions.ADV_SEARCH_PURPOSE){
         const listOfStateParams = {...state.parameters};
-
         return{
             parameters : {
                 ...state.parameters,
@@ -91,11 +121,89 @@ const reducer = (state = initialState, action) => {
             },
             listings : {
                 ...state.listings
+            },
+            locations : {
+                ...state.locations
+            },
+            types : {
+                ...state.types
+            },
+            purpose : {
+                ...state.purpose
             }
         };
 
         return state;
     }
+
+    if(action.type === CacheAction.LOCATION){
+        return{
+            parameters : {
+                ...state.parameters,
+            },
+            breadcrumb : {
+                ...state.breadcrumb
+            },
+            listings : {
+                ...state.listings
+            },
+            locations : {
+                ...action.value
+            },
+            types : {
+                ...state.types
+            },
+            purpose : {
+                ...state.purpose
+            }
+        };
+    }
+    if(action.type === CacheAction.TYPE){
+        return{
+            parameters : {
+                ...state.parameters,
+            },
+            breadcrumb : {
+                ...state.breadcrumb
+            },
+            listings : {
+                ...state.listings
+            },
+            locations : {
+                ...state.locations
+            },
+            types : {
+                ...action.value
+            },
+            purpose : {
+                ...state.purpose
+            }
+        };
+    }
+    if(action.type === CacheAction.PURPOSE){
+        return{
+            parameters : {
+                ...state.parameters,
+            },
+            breadcrumb : {
+                ...state.breadcrumb
+            },
+            listings : {
+                ...state.listings
+            },
+            locations : {
+                ...state.locations
+            },
+            types : {
+                ...state.types
+            },
+            purpose : {
+                ...action.value
+            }
+        };
+    }
+
+    return state;
 }
 
 export default reducer;

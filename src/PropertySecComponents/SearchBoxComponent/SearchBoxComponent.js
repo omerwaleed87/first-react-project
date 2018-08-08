@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import * as Type from "../../CachedContent/Types";
 
@@ -6,11 +7,15 @@ import SearchBoxStyle from './SearchBoxComponent.css';
 
 class SearchBoxComponent extends Component {
 
+    locationCacheFlag = false;
+    typeCacheFlag = false;
+
     state = {
         parameters : {
             purposeId : 1,
             location : "",
             propertyType : "",
+            propertyTypeId : 1,
             price : "",
             beds : "",
         },
@@ -36,15 +41,36 @@ class SearchBoxComponent extends Component {
         this.setState({purpose : searchBoxPurposeState});
     }
     onChangeLocationFilter = (event) => {
+
         const searchBoxParams = {...this.state.parameters};
-        searchBoxParams.location = event.target.value;
+        const cachedTypes = {...this.props.locations};
+        let pushLocations = [];
+
+        for(let x in cachedTypes){
+            pushLocations.push(cachedTypes[x]);
+        }
+
+        pushLocations.map((val, key) => {
+            if(event.target.value == val.id){
+                searchBoxParams.location = val.key;
+            }
+            return val;
+        });
         this.setState({parameters : searchBoxParams});
     }
     onChangePropertyTypeFilter = (event) => {
         const searchBoxParams = {...this.state.parameters};
-        Type.types.map((val, key) => {
-            if(event.target.value == val.key){
+        const cachedTypes = {...this.props.types};
+        let pushTypes = [];
+
+        for(let x in cachedTypes){
+            pushTypes.push(cachedTypes[x]);
+        }
+
+        pushTypes.map((val, key) => {
+            if(event.target.value == val.id){
                 searchBoxParams.propertyType = val.url;
+                searchBoxParams.propertyTypeId = val.id;
             }
             return val;
         });
@@ -98,7 +124,7 @@ class SearchBoxComponent extends Component {
         let urlSegment = [
             "for-sale",
             "commercial-properties",
-            "uae",
+            "dubai",
         ]
 
         for(let keys in stateParams){
@@ -122,12 +148,34 @@ class SearchBoxComponent extends Component {
         this.props.page.history.push(targetUrl);
     }
 
-    render(){
-        console.log("im rendering", this.state, this.props.props);
+    pushTypesCache = () => {
+        let cachedTypes = [];
+        const typeList = {...this.props.types};
+        this.typeCacheFlag = true;
+        for(let x in typeList){
+            cachedTypes.push(typeList[x]);
+        }
 
+        return cachedTypes;
+    }
+
+    pushLocationCache = () => {
+        let cachedLocs = [];
+        const typeList = {...this.props.locations};
+        this.locationCacheFlag = true;
+        for(let x in typeList){
+            cachedLocs.push(typeList[x]);
+        }
+
+        return cachedLocs;
+    }
+
+    render(){
         const activePurposeTab = this.getActivePurposeTab();
         let resetFilter = [SearchBoxStyle.searchboxOptions, SearchBoxStyle.resetFilters];
-
+        let cachedPropType = typeof this.props.types !== "undefined" ? this.pushTypesCache() : {};
+        let cachedLocation = typeof this.props.locations !== "undefined" ? this.pushLocationCache() : {};
+        
         return (
             <div className={SearchBoxStyle.search}>
                 <div className={SearchBoxStyle.searchboxContainer}>
@@ -140,15 +188,16 @@ class SearchBoxComponent extends Component {
                     </div>
                     <div className={SearchBoxStyle.searchboxFilters}>
                         <div className={SearchBoxStyle.first}>
-                            <input type="text" onChange={(event) => this.onChangeLocationFilter(event)} value={this.state.parameters.location} 
-                                className={SearchBoxStyle.locationFilter} placeholder="Location" />
+                            <select onChange={(event) => this.onChangeLocationFilter(event)} className={SearchBoxStyle.locationFilter}>
+                                {this.locationCacheFlag ? cachedLocation.map((x,y) => <option value={x.id} key={x.id}>{x.title}</option>) : ""}
+                            </select>
                             <button className={SearchBoxStyle.searchboxButton} onClick={() => this.searchBoxSubmitHandler()}>
                                 Find
                             </button>
                         </div>
                         { this.state.moreFilter ? <div className={SearchBoxStyle.second}>
                             <select onChange={(event) => this.onChangePropertyTypeFilter(event)} className={SearchBoxStyle.propTypeFilter}>
-                                {Type.types.map((x,y) => <option value={x.key} key={x.key}>{x.value}</option>)}
+                                {this.typeCacheFlag ? cachedPropType.map((x,y) => <option value={x.id} key={x.id}>{x.title}</option>) : ""}
                             </select>
                             <input type="text" onChange={(event) => this.onChangePriceFilter(event)} value={this.state.parameters.price}
                                 className={SearchBoxStyle.priceFilter} placeholder="Price" />
@@ -171,4 +220,15 @@ class SearchBoxComponent extends Component {
     }
 }
 
-export default SearchBoxComponent;
+const mapStateToProps = state => {
+    if(typeof state !== "undefined"){
+        return {
+            locations : state.locations,
+            purpose : state.purpose,
+            types : state.types,
+        };
+    }
+    return {};
+}
+
+export default connect(mapStateToProps, null)(SearchBoxComponent);

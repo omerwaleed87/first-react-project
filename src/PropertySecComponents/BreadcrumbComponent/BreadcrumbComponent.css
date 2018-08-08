@@ -28,8 +28,9 @@
 .breadcrumbs{
     height: 25px;
     position: relative;
-    font-size: 30px;
+    font-size: 22px;
     padding: 10px;
+    
 }
 
 .listingCounts{
@@ -38,4 +39,16 @@
     font-size: 20px;
     padding: 10px;
     width: 100%;
+}
+
+.breadcrumbaArrow{
+    display: inline-block;
+}
+.breadcrumbaArrow i{
+    margin-right: 5px;
+    position: relative;
+    top: 2px;
+}
+.breadcrumbs .breadcrumbaArrow:last-child i{
+    display: none;
 }
