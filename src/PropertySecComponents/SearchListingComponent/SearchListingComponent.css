@@ -24,12 +24,13 @@
     border-width: 10px;
     /*background-color: black;*/
     background-color: #f8f9fb;
+    float: left;
 }
 
 .listingsContainer{
     width: inherit;
     height: inherit;
-        /*background-color: white;*/
+        background-color: white;
 }
 
 .image{

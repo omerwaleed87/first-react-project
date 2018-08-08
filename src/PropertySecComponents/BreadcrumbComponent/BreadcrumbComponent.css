@@ -47,7 +47,8 @@
 .breadcrumbaArrow i{
     margin-right: 5px;
     position: relative;
-    top: 2px;
+    top: 0px;
+    font-size: 16px;
 }
 .breadcrumbs .breadcrumbaArrow:last-child i{
     display: none;

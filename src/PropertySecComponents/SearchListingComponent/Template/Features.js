@@ -5,7 +5,6 @@ import SearchListingStyles from "../SearchListingComponent.css";
 class Features extends Component{
 
     render(){
-        console.log(this.props);
         return(
             <div className={SearchListingStyles.listings}>
                 <div className={SearchListingStyles.listingsContainer}>
