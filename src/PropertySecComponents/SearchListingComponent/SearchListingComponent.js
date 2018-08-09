@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import { connect } from 'react-redux';
 
 import * as ListingActionCreator from './Store/Action';
@@ -11,7 +10,8 @@ class SearchListingComponent extends Component{
     hasMounted = false;
 
     componentDidMount(){
-        this.props.mountListings(this.props.parameters);
+        if(typeof this.props.listings[0] === "undefined")
+            this.props.mountListings(this.props.parameters);
     }
 
     componentWillUpdate(nextState, b){
@@ -19,6 +19,8 @@ class SearchListingComponent extends Component{
             || nextState.parameters.propertyTypeId !== this.props.parameters.propertyTypeId
             || nextState.parameters.location !== this.props.parameters.location)
                 this.props.mountListings(nextState.parameters);
+        
+        return true;
     }
 
     renderListings = () => {
@@ -33,13 +35,14 @@ class SearchListingComponent extends Component{
                       description={val.description}
                       image={val.imagedetail}
                       type={val.typeDetail}
+                      url={val.url}
                       key={key}>
                    </ListingFeaturesTemplate>
         });
     }
 
     render(){
-        if(typeof this.props.listings){
+        if(typeof this.props.listings !== "undefined"){
             const listingTemplateData = this.renderListings();
             return(
                 <div className={SearchListingStyles.searchListings}>

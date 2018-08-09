@@ -8,8 +8,8 @@ import BreadcrumbComponentStyle from './BreadcrumbComponent.css';
 
 class BreadcrumbComponent extends Component {
 
-    componentDidMount(){
-        this.props.mountBreadcrumbTitle(this.props.parameters);
+    componentDidMount(nextState){
+        this.props.mountBreadcrumbTitle(this.props.parameters, this.props.searchRouteParams);
     }
 
     componentWillUpdate(nextState, b){
@@ -17,9 +17,8 @@ class BreadcrumbComponent extends Component {
             if(nextState.parameters.purposeId !== this.props.parameters.purposeId
                 || nextState.parameters.propertyTypeId !== this.props.parameters.propertyTypeId
                 || nextState.parameters.location !== this.props.parameters.location)
-                this.props.mountBreadcrumbTitle(nextState.parameters);
+                this.props.mountBreadcrumbTitle(nextState.parameters, nextState.searchRouteParams);
         }
-        return false;
     }
 
     render(){
@@ -46,9 +45,15 @@ class BreadcrumbComponent extends Component {
                         <div className={BreadcrumbComponentStyle.breadcrumbTitle}>
                             {this.props.breadcrumb.breadcrumb.breadcrumbTitle}
                         </div>
-                        <div className={BreadcrumbComponentStyle.listingCounts}>
-                            "Listings Count"
-                        </div>
+                        {typeof this.props.listings[0] !== "undefined" ?
+                            <div className={BreadcrumbComponentStyle.listingCounts}>
+                                {Object.keys(this.props.listings).length} Properties
+                            </div>
+                         : 
+                            <div className={BreadcrumbComponentStyle.listingCounts}>
+                                0 Properties
+                            </div>
+                         }
                     </div>
                 </div>
             );
@@ -61,7 +66,8 @@ const mapStateToProps = state => {
     if(typeof state !== "undefined"){
         return {
             parameters : state.parameters,
-            breadcrumb : state.breadcrumb
+            breadcrumb : state.breadcrumb,
+            listings : state.listings
         };
     }
     else
@@ -70,7 +76,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        mountBreadcrumbTitle : (stateParams) => dispatch(BreadCrumbActionCreator.getBreadCrumbTitleOnMount(stateParams)),
+        mountBreadcrumbTitle : (stateParams, searchRouteParams) => dispatch(BreadCrumbActionCreator.getBreadCrumbTitleOnMount(stateParams,searchRouteParams)),
     };
 }
 

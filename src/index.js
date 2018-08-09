@@ -15,7 +15,7 @@ import registerServiceWorker from './registerServiceWorker';
 const logger = store => {
     return next => {
         return action => {
-            console.log("[MIDDLEWARE] Dispatching", action);
+            // console.log("[MIDDLEWARE] Dispatching", action);
             const result = next(action);
             console.log("[MIDDLEWARE] next state", store.getState(), result);
             return result;

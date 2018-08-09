@@ -3,6 +3,7 @@ import * as BreadcrumbActions from '../../BreadcrumbComponent/Store/Action';
 import * as ListingActions from '../../SearchListingComponent/Store/Action';
 import * as Types from "../../../CachedContent/Types";
 import * as CacheAction from "../../CacheComponent/Store/Action";
+import * as ListingDetailAction from "../../PropertyDetailsComponent/Store/Action";
 
 const initialState = {
     parameters : {
@@ -25,6 +26,7 @@ const initialState = {
     locations : {},
     purpose : {},
     types : {},
+    propertyDetail : {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -51,7 +53,10 @@ const reducer = (state = initialState, action) => {
             },
             purpose : {
                 ...state.purpose
-            }
+            },
+            propertyDetail : {
+                ...state.propertyDetail
+            },
         };
 
         return state;
@@ -77,7 +82,10 @@ const reducer = (state = initialState, action) => {
             },
             purpose : {
                 ...state.purpose
-            }
+            },
+            propertyDetail : {
+                ...state.propertyDetail
+            },
         };
 
         return state;
@@ -103,7 +111,10 @@ const reducer = (state = initialState, action) => {
             },
             purpose : {
                 ...state.purpose
-            }
+            },
+            propertyDetail : {
+                ...state.propertyDetail
+            },
         };
 
         return state;
@@ -130,7 +141,10 @@ const reducer = (state = initialState, action) => {
             },
             purpose : {
                 ...state.purpose
-            }
+            },
+            propertyDetail : {
+                ...state.propertyDetail
+            },
         };
 
         return state;
@@ -155,9 +169,13 @@ const reducer = (state = initialState, action) => {
             },
             purpose : {
                 ...state.purpose
-            }
+            },
+            propertyDetail : {
+                ...state.propertyDetail
+            },
         };
     }
+
     if(action.type === CacheAction.TYPE){
         return{
             parameters : {
@@ -177,9 +195,13 @@ const reducer = (state = initialState, action) => {
             },
             purpose : {
                 ...state.purpose
-            }
+            },
+            propertyDetail : {
+                ...state.propertyDetail
+            },
         };
     }
+
     if(action.type === CacheAction.PURPOSE){
         return{
             parameters : {
@@ -199,8 +221,37 @@ const reducer = (state = initialState, action) => {
             },
             purpose : {
                 ...action.value
-            }
+            },
+            propertyDetail : {
+                ...state.propertyDetail
+            },
         };
+    }
+
+    if(action.type === ListingDetailAction.GET_LISTING_DETAILS){
+        return{
+            parameters : {
+                ...state.parameters
+            },
+            breadcrumb : {
+                ...state.breadcrumb
+            },
+            listings : {
+                ...state.listings
+            },
+            locations : {
+                ...state.locations
+            },
+            types : {
+                ...state.types
+            },
+            purpose : {
+                ...state.purpose
+            },
+            propertyDetail : {
+                ...action.value
+            },
+        }
     }
 
     return state;

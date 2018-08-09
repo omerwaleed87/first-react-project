@@ -34,12 +34,21 @@ export const getLocationCacheOnMount = (routeParams) => {
     }
 } 
 
-export const getPuposeCacheOnMount = () => {
+export const getPuposeCacheOnMount = (routeParams) => {
     return (dispatch, getState) => {
         axios.get("http://localhost:8000/polls/purpose/")
         .then(response => {
             const allData = response.data;
             dispatch({type : PURPOSE, value : allData.purpose});
+            let purposeParams = {};
+            for(let x in allData.purpose){
+                if(routeParams.match.params.purpose == allData.purpose[x].url){
+                    purposeParams.purpose = allData.purpose[x].url;
+                    purposeParams.purposeId = parseInt(allData.purpose[x].id);
+                    purposeParams.purposeText = allData.purpose[x].title;
+                }
+            }
+            dispatch({type : AdvSearchActions.ADV_SEARCH_FILTERS, value : purposeParams});
         }).catch(error => {
             console.log(error, "i have got an error");
         });
@@ -54,7 +63,7 @@ export const getTypesCacheOnMount = (routeParams) => {
             dispatch({type : TYPE, value : allData.type});
             let typeParams = {};
             for(let x in allData.type){
-                if(routeParams.match.params.propertyType === allData.type[x].url){
+                if(routeParams.match.params.propertyType == allData.type[x].url){
                     typeParams.propertyType = allData.type[x].url;
                     typeParams.propertyTypeId = parseInt(allData.type[x].id);
                 }

@@ -1,0 +1,69 @@
+.detailContainer{
+    position: relative;
+    float: left;
+    left: 190px;
+    width: 920px;
+    background-color: #f8f9fb;
+}
+
+.imageContainer{
+    position: relative;
+    padding: 10px;
+    width: auto;
+    height: 550px;
+}
+.imageContainer img{
+    width: 100%;
+    height: 100%;
+}
+
+.details{
+    position: relative;
+    width: auto;
+    height: 110px;
+    font-size: 20px;
+    background-color: white;
+    margin: 10px;
+}
+
+.price{
+    width: 240px;
+    float: left;
+    height: 50px;
+    padding: 5px;
+}
+
+.area{
+    width: 240px;
+    float: left;
+    height: 50px;
+    padding: 5px;
+}
+
+.beds{
+    width: 100px;
+    float: left;
+    height: 50px;
+    padding: 5px;
+}
+
+.baths{
+    width: 100px;
+    float: left;
+    height: 50px;
+    padding: 5px;
+}
+
+.location{
+    width: 240px;
+    float: left;
+    height: 50px;
+    padding: 5px;
+}
+
+.type{
+    width: 240px;
+    float: left;
+    height: 50px;
+    padding: 5px;
+}

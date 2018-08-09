@@ -10,7 +10,7 @@ class CacheComponent extends Component{
             this.props.getLocationCacheOnMount(this.props.searchRouteParams);
 
         if(typeof this.props.purpose[0] === "undefined")
-            this.props.getPuposeCacheOnMount();
+            this.props.getPuposeCacheOnMount(this.props.searchRouteParams);
 
         if(typeof this.props.types[0] === "undefined"){
             this.props.getTypesCacheOnMount(this.props.searchRouteParams);
@@ -36,7 +36,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getLocationCacheOnMount : (routeParams) => dispatch(CacheActionCreator.getLocationCacheOnMount(routeParams)),
-        getPuposeCacheOnMount : () => dispatch(CacheActionCreator.getPuposeCacheOnMount()),
+        getPuposeCacheOnMount : (routeParams) => dispatch(CacheActionCreator.getPuposeCacheOnMount(routeParams)),
         getTypesCacheOnMount : (routeParams) => dispatch(CacheActionCreator.getTypesCacheOnMount(routeParams)),
     };
 }

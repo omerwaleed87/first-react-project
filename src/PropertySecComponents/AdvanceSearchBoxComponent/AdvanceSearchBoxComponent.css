@@ -3,9 +3,8 @@
     height: 158px;
     color: black;
     display: block;
-    top: 50px;
     background-color: black;
-    position: absolute;
+    position: relative;
 }
 
 .container{

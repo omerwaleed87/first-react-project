@@ -5,7 +5,7 @@ import SearchHeaderComponent from '../../PropertySecComponents/SearchHeaderCompo
 import AdvanceSearchBoxComponent from '../../PropertySecComponents/AdvanceSearchBoxComponent/AdvanceSearchBoxComponent';
 import BreadcrumbComponent from '../../PropertySecComponents/BreadcrumbComponent/BreadcrumbComponent';
 import SearchListingComponent from '../../PropertySecComponents/SearchListingComponent/SearchListingComponent';
-import PaginationComponent from '../../PropertySecComponents/PaginationComponent/PaginationComponent';
+// import PaginationComponent from '../../PropertySecComponents/PaginationComponent/PaginationComponent';
 
 class Search extends Component {
     // constructor(){

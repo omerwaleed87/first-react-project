@@ -3,7 +3,6 @@
     /*background-color: gray;*/
     width: 100%;
     position: relative;
-    top: 209px;
     display: block;
 }
 
@@ -43,6 +42,9 @@
 
 .breadcrumbaArrow{
     display: inline-block;
+}
+.breadcrumbaArrow a{
+    text-decoration: none;
 }
 .breadcrumbaArrow i{
     margin-right: 5px;

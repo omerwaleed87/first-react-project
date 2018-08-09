@@ -123,7 +123,7 @@ class SearchBoxComponent extends Component {
         let queryParams = [];
         let urlSegment = [
             "for-sale",
-            "commercial-properties",
+            "commercial-property",
             "dubai",
         ]
 
