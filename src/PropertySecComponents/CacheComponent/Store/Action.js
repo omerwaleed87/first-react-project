@@ -42,7 +42,7 @@ export const getPuposeCacheOnMount = (routeParams) => {
             dispatch({type : PURPOSE, value : allData.purpose});
             let purposeParams = {};
             for(let x in allData.purpose){
-                if(routeParams.match.params.purpose == allData.purpose[x].url){
+                if(routeParams.match.params.purpose === allData.purpose[x].url){
                     purposeParams.purpose = allData.purpose[x].url;
                     purposeParams.purposeId = parseInt(allData.purpose[x].id);
                     purposeParams.purposeText = allData.purpose[x].title;
@@ -63,7 +63,7 @@ export const getTypesCacheOnMount = (routeParams) => {
             dispatch({type : TYPE, value : allData.type});
             let typeParams = {};
             for(let x in allData.type){
-                if(routeParams.match.params.propertyType == allData.type[x].url){
+                if(routeParams.match.params.propertyType === allData.type[x].url){
                     typeParams.propertyType = allData.type[x].url;
                     typeParams.propertyTypeId = parseInt(allData.type[x].id);
                 }

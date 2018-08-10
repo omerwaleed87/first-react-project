@@ -1,6 +1,3 @@
-import axios from 'axios';
-
-// import * as PropertyTypes from "../../../CachedContent/Types";
 import * as PurposeOptions from "../../../CachedContent/Purpose";
 
 export const ADV_SEARCH_FILTERS = "ADV_SEARCH_FILTERS";

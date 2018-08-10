@@ -8,11 +8,18 @@ import BreadcrumbComponentStyle from './BreadcrumbComponent.css';
 
 class BreadcrumbComponent extends Component {
 
+    currentPage = "";
+
     componentDidMount(nextState){
         this.props.mountBreadcrumbTitle(this.props.parameters, this.props.searchRouteParams);
     }
 
     componentWillUpdate(nextState, b){
+        if(typeof nextState.searchRouteParams.match.params.selector !== "undefined")
+            this.currentPage = "detail";
+        else
+            this.currentPage = "search";
+        
         if(nextState !== "undefined" && this.props !== "undefined"){
             if(nextState.parameters.purposeId !== this.props.parameters.purposeId
                 || nextState.parameters.propertyTypeId !== this.props.parameters.propertyTypeId
@@ -21,8 +28,32 @@ class BreadcrumbComponent extends Component {
         }
     }
 
+    getBreadcrumbHeadline = () => {
+        let content = "";
+        if(this.currentPage === "search"){
+            if(typeof this.props.listings[0] !== "undefined"){
+                content = <div className={BreadcrumbComponentStyle.listingCounts}>
+                                {Object.keys(this.props.listings).length} Properties
+                          </div>;
+            }
+            else{
+                content = <div className={BreadcrumbComponentStyle.listingCounts}>
+                                0 Properties
+                          </div>
+            }
+        }
+        else{
+            if(typeof this.props.propertyDetail.listing !== "undefined"){
+                content = <div className={BreadcrumbComponentStyle.listingCounts}>
+                                {this.props.propertyDetail.listing[0].title}
+                          </div>
+            }
+        }
+        return content;
+    }
+
     render(){
-        
+        const getBreadcrumbHeadline = this.getBreadcrumbHeadline();
         if(this.props.breadcrumb.breadcrumb){
             let breadcrumblocs = [];
             for(let x in this.props.breadcrumb.breadcrumb.locBreadcrumb){
@@ -45,15 +76,7 @@ class BreadcrumbComponent extends Component {
                         <div className={BreadcrumbComponentStyle.breadcrumbTitle}>
                             {this.props.breadcrumb.breadcrumb.breadcrumbTitle}
                         </div>
-                        {typeof this.props.listings[0] !== "undefined" ?
-                            <div className={BreadcrumbComponentStyle.listingCounts}>
-                                {Object.keys(this.props.listings).length} Properties
-                            </div>
-                         : 
-                            <div className={BreadcrumbComponentStyle.listingCounts}>
-                                0 Properties
-                            </div>
-                         }
+                        {getBreadcrumbHeadline}
                     </div>
                 </div>
             );
@@ -67,7 +90,8 @@ const mapStateToProps = state => {
         return {
             parameters : state.parameters,
             breadcrumb : state.breadcrumb,
-            listings : state.listings
+            listings : state.listings,
+            propertyDetail : state.propertyDetail
         };
     }
     else

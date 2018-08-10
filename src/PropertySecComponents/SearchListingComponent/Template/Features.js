@@ -11,7 +11,7 @@ class Features extends Component{
                 <NavLink to={this.props.url[0]} className={SearchListingStyles.listingsContainer}>
                     <div className={SearchListingStyles.image}>
                         <div className={SearchListingStyles.imageContainer}>
-                            <img className={SearchListingStyles.containerImage} src={this.props.image[0]}></img>
+                            <img className={SearchListingStyles.containerImage} src={this.props.image[0]} alt=""></img>
                         </div>
                     </div>
                     <div className={SearchListingStyles.features}>

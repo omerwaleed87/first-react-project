@@ -19,21 +19,21 @@ export const getBreadCrumbTitleOnMount = (Params, searchRouteParams) => {
                     delete urlSegment[0];
                     delete urlSegment[1];
                     for(let x in cachedLocation){
-                        if(cachedLocation[x].key == urlSegment.location){
+                        if(cachedLocation[x].key === urlSegment.location){
                             apiParams.location_key = cachedLocation[x].key;
                         }
                     }
                 }
                 if(stateParams[x] !== "" && x === "propertyTypeId"){
                     for(let x in cachedTypes){
-                        if(cachedTypes[x].url == searchRouteParams.match.params.propertyType){
+                        if(cachedTypes[x].url === searchRouteParams.match.params.propertyType){
                             apiParams.type = cachedLocation[x].id;
                         }
                     }
                 }
                 if(stateParams[x] !== "" && x === "purposeId"){
                     for(let x in cachedPurpose){
-                        if(cachedPurpose[x].url == searchRouteParams.match.params.purpose){
+                        if(cachedPurpose[x].url === searchRouteParams.match.params.purpose){
                             apiParams.purpose = cachedPurpose[x].id;
                         }
                     }

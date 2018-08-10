@@ -6,14 +6,14 @@ import PropertyDescriptionComponentStyle from './PropertyDescriptionComponent.cs
 class PropertyDescriptionComponent extends Component{
 
     render(){
-        if(typeof this.props.propertyDetail.details !== "undefined"){
+        if(typeof this.props.propertyDetail.listing !== "undefined"){
             return(
                 <div className={PropertyDescriptionComponentStyle.propertyDescription}>
                     <div className={PropertyDescriptionComponentStyle.heading}>
                         Property Overview
                     </div>
                     <div className={PropertyDescriptionComponentStyle.description}>
-                        {this.props.propertyDetail.details[0].description}
+                        {this.props.propertyDetail.listing[0].description}
                     </div>
                 </div>
             );

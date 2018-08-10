@@ -199,9 +199,9 @@ class SearchBoxComponent extends Component {
                             <select onChange={(event) => this.onChangePropertyTypeFilter(event)} className={SearchBoxStyle.propTypeFilter}>
                                 {this.typeCacheFlag ? cachedPropType.map((x,y) => <option value={x.id} key={x.id}>{x.title}</option>) : ""}
                             </select>
-                            <input type="text" onChange={(event) => this.onChangePriceFilter(event)} value={this.state.parameters.price}
+                            <input disabled type="text" onChange={(event) => this.onChangePriceFilter(event)} value={this.state.parameters.price}
                                 className={SearchBoxStyle.priceFilter} placeholder="Price" />
-                            <input type="text" onChange={(event) => this.onChangeBedsFilter(event)} value={this.state.parameters.beds}
+                            <input disabled type="text" onChange={(event) => this.onChangeBedsFilter(event)} value={this.state.parameters.beds}
                                 className={SearchBoxStyle.bedsFilter} placeholder="Beds" />
                         </div> : null }
                         

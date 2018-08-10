@@ -16,7 +16,7 @@ export const getListingDetailsOnMount = (routeParams, stateParams) => {
             apiParams['type'] = parseInt(apiParams['type']);
             apiParams['selector'] = parseInt(routeParams.match.params.selector);
             
-            axios.get("http://localhost:8000/polls/details/",{
+            axios.get("http://localhost:8000/polls/listing/",{
                 params : {
                     ...apiParams
                 }

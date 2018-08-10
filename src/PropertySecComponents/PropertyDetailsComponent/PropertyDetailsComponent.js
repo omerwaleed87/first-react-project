@@ -13,12 +13,12 @@ class PropertyDetailsComponent extends Component{
     }
 
     componentWillUpdate(nextState, b){
-        if(typeof nextState.propertyDetail.details === "undefined"){
+        if(typeof nextState.propertyDetail.listing === "undefined"){
             const route = {...this.props.detailsRouteParams};
             this.props.mountDetails(route, this.props.parameters);
         }
-        else if(typeof nextState.propertyDetail.details !== "undefined" && typeof this.props.detailsRouteParams.match.params.selector !== "undefined"){
-            if(nextState.propertyDetail.details[0].id !== this.props.detailsRouteParams.match.params.selector){
+        else if(typeof nextState.propertyDetail.listing !== "undefined" && typeof this.props.detailsRouteParams.match.params.selector !== "undefined"){
+            if(nextState.propertyDetail.listing[0].id !== this.props.detailsRouteParams.match.params.selector){
                 const route = {...this.props.detailsRouteParams};
                 this.props.mountDetails(route, nextState.parameters);
             }
@@ -26,30 +26,30 @@ class PropertyDetailsComponent extends Component{
     }
 
     render(){
-        if(typeof this.props.propertyDetail.details !== "undefined"){
+        if(typeof this.props.propertyDetail.listing !== "undefined"){
             return(
                 <div className={PropertyDetailsComponentStyle.detailContainer}>
                     <div className={PropertyDetailsComponentStyle.imageContainer}>
-                        <img src={this.props.propertyDetail.details[0].imagedetail[0]}/>
+                        <img src={this.props.propertyDetail.listing[0].imagedetail[0]}/>
                     </div>
                     <div className={PropertyDetailsComponentStyle.details}>
                         <div className={PropertyDetailsComponentStyle.price}>
-                            {this.props.propertyDetail.details[0].price} AED
+                            {this.props.propertyDetail.listing[0].price} AED
                         </div>
                         <div className={PropertyDetailsComponentStyle.area}>
-                            {this.props.propertyDetail.details[0].area} Square meters
+                            {this.props.propertyDetail.listing[0].area} Square meters
                         </div>
                         <div className={PropertyDetailsComponentStyle.beds}>
-                            {this.props.propertyDetail.details[0].beds} beds
+                            {this.props.propertyDetail.listing[0].beds} beds
                         </div>
                         <div className={PropertyDetailsComponentStyle.baths}>
-                            {this.props.propertyDetail.details[0].baths} baths
+                            {this.props.propertyDetail.listing[0].baths} baths
                         </div>
                         <div className={PropertyDetailsComponentStyle.location}>
-                            {this.props.propertyDetail.details[0].locationdetail.locationTitle}, {this.props.propertyDetail.details[0].locationdetail.parentTitle}
+                            {this.props.propertyDetail.listing[0].locationdetail.locationTitle}, {this.props.propertyDetail.listing[0].locationdetail.parentTitle}
                         </div>
                         <div className={PropertyDetailsComponentStyle.type}>
-                            {this.props.propertyDetail.details[0].typeDetail.title}
+                            {this.props.propertyDetail.listing[0].typeDetail.title}
                         </div>
                     </div>
                 </div>

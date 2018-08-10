@@ -77,14 +77,14 @@ class AdvanceSearchBoxComponent extends Component{
                             <select onChange={(event, routes) => this.props.onChangePropType(event, this.props.searchRouteParams, this.props.types)} className={searchBoxInput["uperInputs"]["typeInputMargin"].join(" ")}>
                                 {cachedPropType.map((x,y) => <option value={x.id} key={x.id} selected={x.id == this.props.parameters.propertyTypeId ? "selected" : ""}>{x.title}</option>)}
                             </select>
-                            <input className={searchBoxInput["uperInputs"]["priceInputMargin"].join(" ")} type="text" value={""} placeholder="Price"/>
+                            <input disabled className={searchBoxInput["uperInputs"]["priceInputMargin"].join(" ")} type="text" value={""} placeholder="Price"/>
                         </div>
                         <div className={AdvanceSearchBoxStyle.second}>
-                            <input className={searchBoxInput["lowerInputs"]["bedsInputMargin"].join(" ")} type="text" value={""} placeholder="Beds"/>
-                            <input className={searchBoxInput["lowerInputs"]["areaInputMargin"].join(" ")} type="text" value={""} placeholder="Area"/>
-                            <input className={searchBoxInput["lowerInputs"]["bathsInputMargin"].join(" ")} type="text" value={""} placeholder="Baths"/>
-                            <input className={searchBoxInput["lowerInputs"]["keywordInputMargin"].join(" ")} type="text" value={""} placeholder="Keyword"/>
-                            <input className={searchBoxInput["lowerInputs"]["agentInputMargin"].join(" ")} type="text" value={""} placeholder="Agent"/>
+                            <input disabled className={searchBoxInput["lowerInputs"]["bedsInputMargin"].join(" ")} type="text" value={""} placeholder="Beds"/>
+                            <input disabled className={searchBoxInput["lowerInputs"]["areaInputMargin"].join(" ")} type="text" value={""} placeholder="Area"/>
+                            <input disabled className={searchBoxInput["lowerInputs"]["bathsInputMargin"].join(" ")} type="text" value={""} placeholder="Baths"/>
+                            <input disabled className={searchBoxInput["lowerInputs"]["keywordInputMargin"].join(" ")} type="text" value={""} placeholder="Keyword"/>
+                            <input disabled className={searchBoxInput["lowerInputs"]["agentInputMargin"].join(" ")} type="text" value={""} placeholder="Agent"/>
                         </div>
                     </div>
                 </div>

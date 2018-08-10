@@ -10,7 +10,7 @@ class Home extends Component {
     render(){
         return (
             <section className="home">
-                <CacheComponent></CacheComponent>
+                <CacheComponent searchRouteParams={this.props}></CacheComponent>
                 <HeaderComponent></HeaderComponent>
                 <SearchBoxComponent page={this.props}></SearchBoxComponent>
                 <PopularSearchComponent></PopularSearchComponent>

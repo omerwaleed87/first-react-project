@@ -45,7 +45,13 @@
 }
 .breadcrumbaArrow a{
     text-decoration: none;
+    color: blue;
 }
+
+.breadcrumbaArrow a:hover{
+    text-decoration: underline;
+}
+
 .breadcrumbaArrow i{
     margin-right: 5px;
     position: relative;

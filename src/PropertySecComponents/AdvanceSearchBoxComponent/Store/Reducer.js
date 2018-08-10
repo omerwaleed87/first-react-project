@@ -1,9 +1,9 @@
 import * as AdvSearchActions from './Action';
 import * as BreadcrumbActions from '../../BreadcrumbComponent/Store/Action';
 import * as ListingActions from '../../SearchListingComponent/Store/Action';
-import * as Types from "../../../CachedContent/Types";
 import * as CacheAction from "../../CacheComponent/Store/Action";
 import * as ListingDetailAction from "../../PropertyDetailsComponent/Store/Action";
+import * as PopularPropertiesAction from "../../PopularSearchComponent/Store/Action";
 
 const initialState = {
     parameters : {
@@ -27,6 +27,7 @@ const initialState = {
     purpose : {},
     types : {},
     propertyDetail : {},
+    popularProperties : {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -57,6 +58,9 @@ const reducer = (state = initialState, action) => {
             propertyDetail : {
                 ...state.propertyDetail
             },
+            popularProperties : {
+                ...state.popularProperties
+            }
         };
 
         return state;
@@ -86,6 +90,9 @@ const reducer = (state = initialState, action) => {
             propertyDetail : {
                 ...state.propertyDetail
             },
+            popularProperties : {
+                ...state.popularProperties
+            }
         };
 
         return state;
@@ -115,6 +122,9 @@ const reducer = (state = initialState, action) => {
             propertyDetail : {
                 ...state.propertyDetail
             },
+            popularProperties : {
+                ...state.popularProperties
+            }
         };
 
         return state;
@@ -145,6 +155,9 @@ const reducer = (state = initialState, action) => {
             propertyDetail : {
                 ...state.propertyDetail
             },
+            popularProperties : {
+                ...state.popularProperties
+            }
         };
 
         return state;
@@ -173,6 +186,9 @@ const reducer = (state = initialState, action) => {
             propertyDetail : {
                 ...state.propertyDetail
             },
+            popularProperties : {
+                ...state.popularProperties
+            }
         };
     }
 
@@ -199,6 +215,9 @@ const reducer = (state = initialState, action) => {
             propertyDetail : {
                 ...state.propertyDetail
             },
+            popularProperties : {
+                ...state.popularProperties
+            }
         };
     }
 
@@ -225,6 +244,9 @@ const reducer = (state = initialState, action) => {
             propertyDetail : {
                 ...state.propertyDetail
             },
+            popularProperties : {
+                ...state.popularProperties
+            }
         };
     }
 
@@ -251,6 +273,38 @@ const reducer = (state = initialState, action) => {
             propertyDetail : {
                 ...action.value
             },
+            popularProperties : {
+                ...state.popularProperties
+            }
+        }
+    }
+
+    if(action.type === PopularPropertiesAction.GET_POPULAR_PROPERTIES){
+        return{
+            parameters : {
+                ...state.parameters
+            },
+            breadcrumb : {
+                ...state.breadcrumb
+            },
+            listings : {
+                ...state.listings
+            },
+            locations : {
+                ...state.locations
+            },
+            types : {
+                ...state.types
+            },
+            purpose : {
+                ...state.purpose
+            },
+            propertyDetail : {
+                ...state.propertyDetail
+            },
+            popularProperties : {
+                ...action.value
+            }
         }
     }
 
