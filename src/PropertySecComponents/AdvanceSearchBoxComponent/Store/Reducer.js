@@ -4,6 +4,7 @@ import * as ListingActions from '../../SearchListingComponent/Store/Action';
 import * as CacheAction from "../../CacheComponent/Store/Action";
 import * as ListingDetailAction from "../../PropertyDetailsComponent/Store/Action";
 import * as PopularPropertiesAction from "../../PopularSearchComponent/Store/Action";
+import * as PaginationAction from "../../PaginationComponent/Store/Action";
 
 const initialState = {
     parameters : {
@@ -19,7 +20,8 @@ const initialState = {
         area : "",
         baths : "",
         keyword : "",
-        agent : ""
+        agent : "",
+        page : 1,
     },
     breadcrumb : {},
     listings : {},
@@ -98,7 +100,7 @@ const reducer = (state = initialState, action) => {
         return state;
     }
 
-    if(action.type === "LISTING"){
+    if(action.type === ListingActions.LISTING){
         
         return{
             parameters : {
@@ -304,6 +306,36 @@ const reducer = (state = initialState, action) => {
             },
             popularProperties : {
                 ...action.value
+            }
+        }
+    }
+
+    if(action.type === PaginationAction.PAGINATION){
+        return{
+            parameters : {
+                ...state.parameters,
+                ...action.value
+            },
+            breadcrumb : {
+                ...state.breadcrumb
+            },
+            listings : {
+                ...state.listings
+            },
+            locations : {
+                ...state.locations
+            },
+            types : {
+                ...state.types
+            },
+            purpose : {
+                ...state.purpose
+            },
+            propertyDetail : {
+                ...state.propertyDetail
+            },
+            popularProperties : {
+                ...state.popularProperties
             }
         }
     }

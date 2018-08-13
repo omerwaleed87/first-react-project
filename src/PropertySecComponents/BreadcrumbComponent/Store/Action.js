@@ -9,31 +9,31 @@ export const getBreadCrumbTitleOnMount = (Params, searchRouteParams) => {
             const cachedTypes = getState().types;
             const cachedPurpose = getState().purpose;
             const cachedLocation = getState().locations;
+            let urlSegment = searchRouteParams.match.params;
+
             let apiParams = {};
+            let locationWithCity = urlSegment['location'];
             for(let x in stateParams){
                 if(stateParams[x] !== "" && x === "location"){
-                    let urlSegment = searchRouteParams.match.params;
-                    if(typeof urlSegment[0] !== "undefined" && urlSegment[0] !== ""){
-                        urlSegment.location += "/"+ urlSegment[0].replace(/\/$/, "");
+                    if(typeof urlSegment['city'] !== "undefined" && urlSegment['city'] !== ""){
+                        locationWithCity += urlSegment['city'].replace(/\/$/, "") + "/";
                     }
-                    delete urlSegment[0];
-                    delete urlSegment[1];
                     for(let x in cachedLocation){
-                        if(cachedLocation[x].key === urlSegment.location){
+                        if(cachedLocation[x].key === locationWithCity.replace(/\/$/, "")){
                             apiParams.location_key = cachedLocation[x].key;
                         }
                     }
                 }
                 if(stateParams[x] !== "" && x === "propertyTypeId"){
                     for(let x in cachedTypes){
-                        if(cachedTypes[x].url === searchRouteParams.match.params.propertyType){
+                        if(cachedTypes[x].url === searchRouteParams.match.params.propertyType.replace(/\/$/, "")){
                             apiParams.type = cachedLocation[x].id;
                         }
                     }
                 }
                 if(stateParams[x] !== "" && x === "purposeId"){
                     for(let x in cachedPurpose){
-                        if(cachedPurpose[x].url === searchRouteParams.match.params.purpose){
+                        if(cachedPurpose[x].url === searchRouteParams.match.params.purpose.replace(/\/$/, "")){
                             apiParams.purpose = cachedPurpose[x].id;
                         }
                     }

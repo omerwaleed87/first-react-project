@@ -33,7 +33,7 @@ class BreadcrumbComponent extends Component {
         if(this.currentPage === "search"){
             if(typeof this.props.listings[0] !== "undefined"){
                 content = <div className={BreadcrumbComponentStyle.listingCounts}>
-                                {Object.keys(this.props.listings).length} Properties
+                                {this.props.listings.listing_count} Properties
                           </div>;
             }
             else{

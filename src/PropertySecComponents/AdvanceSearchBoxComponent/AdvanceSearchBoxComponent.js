@@ -68,13 +68,13 @@ class AdvanceSearchBoxComponent extends Component{
                 <div className={AdvanceSearchBoxStyle.advSearchBox}>
                     <div className={AdvanceSearchBoxStyle.container}>
                         <div className={AdvanceSearchBoxStyle.first}>
-                            <select onChange={(event, routes) => this.props.onChangePurpose(event, this.props.searchRouteParams)} className={searchBoxInput["uperInputs"]["purposeInputMargin"].join(" ")}>
+                            <select onChange={(event, routes) => this.props.onChangePurpose(event, this.props.searchRouteParams, this.props.parameters)} className={searchBoxInput["uperInputs"]["purposeInputMargin"].join(" ")}>
                                 {PurposeOptions.purpose.map((x,y) => <option value={x.key} key={x.key} selected={x.key === this.props.parameters.purposeId ? "selected" : ""}>{x.value}</option>)}
                             </select>
                             <select onChange={(event, routes) => this.props.onChangeLocationFilter(event, this.props.searchRouteParams, this.props.locations)} className={searchBoxInput["uperInputs"]["locationInputMargin"].join(" ")}>
                                 {cachedLocation.map((x,y) => <option value={x.id} key={x.id} selected={x.id == this.props.parameters.locationId ? "selected" : ""}>{x.title}</option>)}
                             </select>
-                            <select onChange={(event, routes) => this.props.onChangePropType(event, this.props.searchRouteParams, this.props.types)} className={searchBoxInput["uperInputs"]["typeInputMargin"].join(" ")}>
+                            <select onChange={(event, routes) => this.props.onChangePropType(event, this.props.searchRouteParams, this.props.types, this.props.parameters)} className={searchBoxInput["uperInputs"]["typeInputMargin"].join(" ")}>
                                 {cachedPropType.map((x,y) => <option value={x.id} key={x.id} selected={x.id == this.props.parameters.propertyTypeId ? "selected" : ""}>{x.title}</option>)}
                             </select>
                             <input disabled className={searchBoxInput["uperInputs"]["priceInputMargin"].join(" ")} type="text" value={""} placeholder="Price"/>
@@ -108,8 +108,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         mountRouteParamsToSearchFilters : (routeParams, types, locations) => dispatch(AdvSearchBoxActionCreator.getSearchParamsOnMount(routeParams, types, locations)),
-        onChangePurpose : (event, routes) => dispatch(AdvSearchBoxActionCreator.changePurpose(event, routes)), 
-        onChangePropType : (event, routes, types) => dispatch(AdvSearchBoxActionCreator.changePropertyType(event, routes, types)), 
+        onChangePurpose : (event, routes, stateParams) => dispatch(AdvSearchBoxActionCreator.changePurpose(event, routes, stateParams)), 
+        onChangePropType : (event, routes, types, stateParams) => dispatch(AdvSearchBoxActionCreator.changePropertyType(event, routes, types, stateParams)), 
         onChangeLocationFilter : (event, routes, location) => dispatch(AdvSearchBoxActionCreator.changeLocationFilter(event, routes, location)), 
     };
 }

@@ -4,38 +4,44 @@ export const ADV_SEARCH_FILTERS = "ADV_SEARCH_FILTERS";
 export const ADV_SEARCH_PURPOSE = "ADV_SEARCH_PURPOSE";
 
 export const getSearchParamsOnMount = (params, PropertyTypes, LocationData) => {
-
-    let urlSegment = params.match.params;
-    if(typeof urlSegment[0] !== "undefined" && urlSegment[0] !== ""){
-        urlSegment.location += "/"+ urlSegment[0].replace(/\/$/, "");
-    }
-    delete urlSegment[0];
-    delete urlSegment[1];
-
+    const urlSegment = params.match.params;
     const queryParams = params.location.search;
 
     let purposeTextParam = "For Sale";
     let purposeIdParam = 1;
 
-    if(urlSegment.purpose === "to-rent"){
+    if(urlSegment.purpose === "to-rent/"){
         purposeTextParam = "To Rent";
         purposeIdParam = 2;
     }
+
     let stateSegments = {};
     if(PropertyTypes !== "undefined"){
         for(let x in PropertyTypes){
-            if(urlSegment.propertyType === PropertyTypes[x].url){
-                stateSegments.propertyTypeId = PropertyTypes[x].id;
+            if(urlSegment.propertyType.replace(/\/$/, "") === PropertyTypes[x].url){
+                stateSegments.propertyTypeId = parseInt(PropertyTypes[x].id);
+                stateSegments.propertyType = PropertyTypes[x].url;
             }
         }
     }
-    if(LocationData !== "undefined"){
+    if(typeof LocationData !== "undefined"){
+        let locationWithCity = urlSegment['location'];
+        if(typeof urlSegment['city'] !== "undefined" && urlSegment['city'] !== ""){
+            locationWithCity += urlSegment['city'].replace(/\/$/, "") + "/";
+        }
         for(let x in LocationData){
-            if(urlSegment.location === LocationData[x].key){
-                stateSegments.locationId = LocationData[x].id;
+            if(locationWithCity.replace(/\/$/, "") === LocationData[x].key){
+                stateSegments.locationId = parseInt(LocationData[x].id);
+                stateSegments.location = LocationData[x].key;
             }
         }
     }
+
+    if(typeof urlSegment.page === "undefined")
+        stateSegments.page = 1;
+
+    if(typeof urlSegment.page !== "undefined" && urlSegment.page !== 1)
+        stateSegments.page = parseInt(urlSegment.page.replace(/\/$/, ""));
     
     let queryParamsArray = [];
     let queryParamsWithIndex = [];
@@ -54,9 +60,7 @@ export const getSearchParamsOnMount = (params, PropertyTypes, LocationData) => {
             return value;
         });
     }
-
     const stateParams = {
-        ...urlSegment,
         purposeText: purposeTextParam,
         purposeId : purposeIdParam,
         ...stateSegments,
@@ -69,7 +73,7 @@ export const getSearchParamsOnMount = (params, PropertyTypes, LocationData) => {
     };
 } 
 
-export const changePurpose = (event, routes) => {
+export const changePurpose = (event, routes, params) => {
     
     let purpose = "";
     let purposeText = "";
@@ -82,8 +86,8 @@ export const changePurpose = (event, routes) => {
             purposeText = value.value;
         }
     });
-
-    routes.history.push("/"+ purpose +"/"+ routes.match.params.propertyType +"/"+ routes.match.params.location +"/");
+    
+    routes.history.push("/"+ purpose +"/"+ params.propertyType +"/"+ params.location +"/");
     
     const stateParams = {
         purposeText: purposeText,
@@ -97,7 +101,7 @@ export const changePurpose = (event, routes) => {
     };
 }
 
-export const changePropertyType = (event, routes, PropertyTypes) => {
+export const changePropertyType = (event, routes, PropertyTypes, params) => {
 
     let propertyType = "";
     let propertyId = "";
@@ -109,7 +113,7 @@ export const changePropertyType = (event, routes, PropertyTypes) => {
         }
     }
 
-    routes.history.push("/"+ routes.match.params.purpose +"/"+ propertyType +"/"+ routes.match.params.location +"/");
+    routes.history.push("/"+ params.purpose +"/"+ propertyType +"/"+ params.location +"/");
     
     const stateParams = {
         propertyType : propertyType,
@@ -131,7 +135,9 @@ export const changeLocationFilter = (event, routes, Location) => {
         }
     }
 
-    routes.history.push("/"+ routes.match.params.purpose +"/"+ routes.match.params.propertyType +"/"+ locationParams.location +"/");
+    let urlPurpose = routes.match.params.purpose.replace(/\/$/, "");
+    let urlType = routes.match.params.propertyType.replace(/\/$/, "");
+    routes.history.push("/"+ urlPurpose +"/"+ urlType +"/"+ locationParams.location +"/");
     
     return {
         type : ADV_SEARCH_PURPOSE,

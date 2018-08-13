@@ -12,8 +12,8 @@ class App extends Component {
       <section className="property-section">
           <Switch>
               <Route path="/" exact component={HomePage}></Route>
-              <Route path="/:purpose/:propertyType/:location/**/:title-:selector/" exact component={ViewPage}></Route>
-              <Route path="/:purpose/:propertyType/:location/**/" component={SearchPage}></Route>
+              <Route path="/:purpose(for-sale/|to-rent/):propertyType([A-z-]+/)?:location([A-z]+[-]*[A-z]+/)?:city([A-z]+[-]*[A-z]+/)*:page([0-9]+/)*" exact component={SearchPage}></Route>
+              <Route path="/:purpose(for-sale/|to-rent/):propertyType([A-z-]+/)?:location([A-z]+[-]*[A-z]+/)?:city([A-z]+[-]*[A-z]+/)*:title-:selector/" exact component={ViewPage}></Route>
           </Switch>
       </section>
     );

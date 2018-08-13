@@ -14,20 +14,22 @@ export const getLocationCacheOnMount = (routeParams) => {
             dispatch({type : LOCATION, value : allData.location});
 
             let urlSegment = routeParams.match.params;
-            if(typeof urlSegment[0] !== "undefined" && urlSegment[0] !== ""){
-                urlSegment.location += "/"+ urlSegment[0].replace(/\/$/, "");
-            }
-            delete urlSegment[0];
-            delete urlSegment[1];
-
-            let locParams = {};
-            for(let x in allData.location){
-                if(urlSegment.location === allData.location[x].key){
-                    locParams.location = allData.location[x].key;
-                    locParams.locationId = parseInt(allData.location[x].id);
+            if(typeof urlSegment.location !== "undefined"){
+                
+                let locationWithCity = urlSegment['location'];
+                if(typeof urlSegment['city'] !== "undefined" && urlSegment['city'] !== ""){
+                    locationWithCity += urlSegment['city'].replace(/\/$/, "") + "/";
                 }
+
+                let locParams = {};
+                for(let x in allData.location){
+                    if(locationWithCity.replace(/\/$/, "") === allData.location[x].key){
+                        locParams.location = allData.location[x].key;
+                        locParams.locationId = parseInt(allData.location[x].id);
+                    }
+                }
+                dispatch({type : AdvSearchActions.ADV_SEARCH_FILTERS, value : locParams});
             }
-            dispatch({type : AdvSearchActions.ADV_SEARCH_FILTERS, value : locParams});
         }).catch(error => {
             console.log(error, "i have got an error");
         });
@@ -40,15 +42,19 @@ export const getPuposeCacheOnMount = (routeParams) => {
         .then(response => {
             const allData = response.data;
             dispatch({type : PURPOSE, value : allData.purpose});
-            let purposeParams = {};
-            for(let x in allData.purpose){
-                if(routeParams.match.params.purpose === allData.purpose[x].url){
-                    purposeParams.purpose = allData.purpose[x].url;
-                    purposeParams.purposeId = parseInt(allData.purpose[x].id);
-                    purposeParams.purposeText = allData.purpose[x].title;
+
+            const urlPurpose = routeParams.match.params.purpose;
+            if(typeof urlPurpose !== "undefined"){
+                let purposeParams = {};
+                for(let x in allData.purpose){
+                    if(urlPurpose.replace(/\/$/, "") === allData.purpose[x].url){
+                        purposeParams.purpose = allData.purpose[x].url;
+                        purposeParams.purposeId = parseInt(allData.purpose[x].id);
+                        purposeParams.purposeText = allData.purpose[x].title;
+                    }
                 }
+                dispatch({type : AdvSearchActions.ADV_SEARCH_FILTERS, value : purposeParams});
             }
-            dispatch({type : AdvSearchActions.ADV_SEARCH_FILTERS, value : purposeParams});
         }).catch(error => {
             console.log(error, "i have got an error");
         });
@@ -61,14 +67,18 @@ export const getTypesCacheOnMount = (routeParams) => {
         .then(response => {
             const allData = response.data;
             dispatch({type : TYPE, value : allData.type});
-            let typeParams = {};
-            for(let x in allData.type){
-                if(routeParams.match.params.propertyType === allData.type[x].url){
-                    typeParams.propertyType = allData.type[x].url;
-                    typeParams.propertyTypeId = parseInt(allData.type[x].id);
+
+            const urlType = routeParams.match.params.propertyType;
+            if(typeof urlType !== "undefined"){
+                let typeParams = {};
+                for(let x in allData.type){
+                    if(routeParams.match.params.propertyType.replace(/\/$/, "") === allData.type[x].url){
+                        typeParams.propertyType = allData.type[x].url;
+                        typeParams.propertyTypeId = parseInt(allData.type[x].id);
+                    }
                 }
+                dispatch({type : AdvSearchActions.ADV_SEARCH_FILTERS, value : typeParams});
             }
-            dispatch({type : AdvSearchActions.ADV_SEARCH_FILTERS, value : typeParams});
         }).catch(error => {
             console.log(error, "i have got an error");
         });

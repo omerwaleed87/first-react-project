@@ -9,7 +9,7 @@ export const getListingsOnMount = (Params) => {
             let apiParams = {};
             const apiAllowedParams = {"locationId" : "location", "propertyTypeId" : "type", "purposeId" : "purpose",
                                     "price" : "price", "area" : "area", "keyword" : "keyword", "agent" : "agent",
-                                    "beds" : "beds", "baths" : "baths"};
+                                    "beds" : "beds", "baths" : "baths", "page" : "page"};
             for(let x in stateParams){
                 if(stateParams[x] !== "" && typeof apiAllowedParams[x] !== "undefined"){
                     apiParams[apiAllowedParams[x]] = stateParams[x];

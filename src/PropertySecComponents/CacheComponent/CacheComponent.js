@@ -30,7 +30,6 @@ const mapStateToProps = state => {
             types : state.types,
         };
     }
-    // return{};
 }
 
 const mapDispatchToProps = dispatch => {

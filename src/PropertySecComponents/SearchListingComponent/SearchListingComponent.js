@@ -7,17 +7,16 @@ import ListingFeaturesTemplate from "./Template/Features";
 
 class SearchListingComponent extends Component{
 
-    hasMounted = false;
-
-    componentDidMount(){
-        if(typeof this.props.listings[0] === "undefined")
+    componentWillMount(nextState, b){
+        // if(typeof this.props.listings[0] === "undefined")
             this.props.mountListings(this.props.parameters);
     }
 
     componentWillUpdate(nextState, b){
         if(nextState.parameters.purposeId !== this.props.parameters.purposeId
             || nextState.parameters.propertyTypeId !== this.props.parameters.propertyTypeId
-            || nextState.parameters.location !== this.props.parameters.location)
+            || nextState.parameters.location !== this.props.parameters.location 
+            || nextState.parameters.page !== this.props.parameters.page)
                 this.props.mountListings(nextState.parameters);
         
         return true;
@@ -42,7 +41,7 @@ class SearchListingComponent extends Component{
     }
 
     render(){
-        if(typeof this.props.listings !== "undefined"){
+        if(typeof this.props.listings[0] !== "undefined"){
             const listingTemplateData = this.renderListings();
             return(
                 <div className={SearchListingStyles.searchListings}>
